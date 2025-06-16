@@ -1,0 +1,36 @@
+﻿@page
+@model LoginWith2faModel
+@{
+    ViewData["Title"] = "Xác thực hai yếu tố";
+}
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%; border-radius: 10px;">
+        <div class="text-center mb-4">
+            <h3 class="fw-bold">🔒 Xác thực hai yếu tố</h3>
+            <p class="text-muted">Vui lòng nhập mã xác thực từ ứng dụng của bạn.</p>
+        </div>
+        <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
+            <input asp-for="RememberMe" type="hidden" />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="Input.TwoFactorCode" class="form-label fw-semibold">Mã xác thực</label>
+                <input asp-for="Input.TwoFactorCode" class="form-control rounded-pill text-center" autocomplete="off" placeholder="Nhập mã 6 chữ số" />
+                <span asp-validation-for="Input.TwoFactorCode" class="text-danger"></span>
+            </div>
+            <div class="mb-3 form-check">
+                <input asp-for="Input.RememberMachine" class="form-check-input" />
+                <label asp-for="Input.RememberMachine" class="form-check-label">Ghi nhớ thiết bị này</label>
+            </div>
+            <button type="submit" class="btn btn-success w-100 rounded-pill">Đăng nhập</button>
+        </form>
+        <div class="text-center mt-3">
+            <p class="text-muted">Không thể truy cập thiết bị xác thực?</p>
+            <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl" class="text-success">Sử dụng mã khôi phục</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

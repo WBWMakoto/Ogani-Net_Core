@@ -1,0 +1,26 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Xác nhận đăng ký";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (Model.DisplayConfirmAccountLink)
+{
+    <p>
+        Ứng dụng này hiện chưa cấu hình hệ thống gửi email thực. Vui lòng tham khảo
+        <a href="https://aka.ms/aspaccountconf">hướng dẫn này</a> để thiết lập email xác thực.
+    </p>
+    <p>
+        Thông thường, một email sẽ được gửi đến bạn. Bạn có thể xác nhận tài khoản bằng cách nhấp vào đường dẫn sau:
+        <br>
+        <a id="confirm-link" href="@Model.EmailConfirmationUrl" class="btn btn-success mt-2">🔗 Xác nhận tài khoản</a>
+    </p>
+}
+else
+{
+    <p>
+        Vui lòng kiểm tra email của bạn để xác nhận tài khoản.
+    </p>
+}

@@ -1,0 +1,301 @@
+﻿@model List<WebApplication1.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Thanh toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="images/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Thanh toán</h2>
+                    <div class="breadcrumb__option">
+                        <a asp-controller="Home" asp-action="Index">Trang chủ</a>
+                        <span>Thanh toán</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+<!-- Checkout Section Begin -->
+<section class="checkout spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h6>
+                    <span class="icon_tag_alt"></span> Có phiếu giảm giá? <a href="#">Bấm vào đây</a> để nhập mã của bạn
+                </h6>
+            </div>
+        </div>
+        <div class="checkout__form">
+            <h4>Chi tiết thanh toán</h4>
+            <form id="checkout-form">
+                <div class="row">
+                    <div class="col-lg-8 col-md-6">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Tên<span>*</span></p>
+                                    <input type="text" name="firstName" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Họ<span>*</span></p>
+                                    <input type="text" name="lastName" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout__input">
+                            <p>Quốc gia<span>*</span></p>
+                            <input type="text" name="country" required>
+                        </div>
+                        <div class="checkout__input">
+                            <p>Địa chỉ<span>*</span></p>
+                            <input type="text" name="address" placeholder="Street Address" class="checkout__input__add" required>
+                            <input type="text" name="address2" placeholder="Apartment, suite, unite ect (optional)">
+                        </div>
+                        <div class="checkout__input">
+                            <p>Thị trấn/Thành phố<span>*</span></p>
+                            <input type="text" name="city" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Số điện thoại<span>*</span></p>
+                                    <input type="text" name="phone" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="checkout__input">
+                                    <p>Email<span>*</span></p>
+                                    <input type="email" name="email" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkout__input__checkbox">
+                            <label for="diff-acc">
+                                Gửi đến một địa chỉ khác?
+                                <input type="checkbox" id="diff-acc">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        <div class="checkout__input">
+                            <p>Ghi chú đặt hàng</p>
+                            <input type="text" name="orderNotes" placeholder="Notes about your order, e.g. special notes for delivery.">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="checkout__order">
+                            <h4>Đơn hàng của bạn</h4>
+                            <div class="checkout__order__products">Các sản phẩm <span>Tổng cộng</span></div>
+                            <ul>
+                                @foreach (var item in Model)
+                                {
+                                    <li>@item.ProductName <span>@(item.Total % 1 == 0 ? item.Total.ToString("#,##0") + "đ" : item.Total.ToString("#,##0.##") + "đ")</span></li>
+                                }
+                            </ul>
+                            <div class="checkout__order__subtotal">Tổng phụ <span>@(Model.Sum(item => item.Total) % 1 == 0 ? Model.Sum(item => item.Total).ToString("#,##0") + "đ" : Model.Sum(item => item.Total).ToString("#,##0.##") + "đ")</span></div>
+                            <div class="checkout__order__total">Tổng cộng <span id="finalPrice">@(Model.Sum(item => item.Total) % 1 == 0 ? Model.Sum(item => item.Total).ToString("#,##0") + "đ" : Model.Sum(item => item.Total).ToString("#,##0.##") + "đ")</span></div>
+                            <div class="checkout__input__checkbox">
+                                <label for="payment">
+                                    Thanh toán VNPay
+                                    <input type="checkbox" id="payment" name="paymentMethod" value="vnpay">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="checkout__input__checkbox">
+                                <label for="qrcode">
+                                    Thanh toán QR Code
+                                    <input type="checkbox" id="qrcode" name="paymentMethod" value="qrcode">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <button type="submit" class="site-btn" id="placeOrderBtn">VUI LÒNG ĐẶT HÀNG</button>
+                        </div>
+                        <div class="checkout__order qr-code-section" style="display: none;">
+                            <img id="qrImage" src="" alt="QR Code" style="width: 400px; height: auto;">
+                            <p>Số tiền thanh toán: <span id="qrAmount"></span></p>
+                            <p>Thời gian còn lại: <span id="countdown"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+<!-- Checkout Section End -->
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            let currentOrderDescription = "PNT" + new Date().getTime();
+            // let currentOrderDescription = "PNT1737114263762";
+            let isProcessing = false;
+
+            $('#checkout-form').on('submit', function (e) {
+                e.preventDefault();
+
+                var paymentMethod = $('input[name="paymentMethod"]:checked').val();
+                if (!paymentMethod) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Cảnh báo',
+                        text: 'Vui lòng chọn phương thức thanh toán.'
+                    });
+                    return;
+                }
+
+                var formData = $(this).serialize();
+                formData += "&orderDescription=" + currentOrderDescription;
+
+                if (paymentMethod === "vnpay") {
+                    // Thanh toán VNPay
+                    $.ajax({
+                        url: '@Url.Action("Checkout", "CheckOut")',
+                        type: 'POST',
+                        data: formData,
+                        success: function (response) {
+                            if (response.success) {
+                                window.location.href = response.paymentUrl;
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Lỗi',
+                                    text: response.message
+                                });
+                            }
+                        },
+                        error: function () {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi',
+                                text: 'Đã xảy ra lỗi khi xử lý thanh toán.'
+                            });
+                        }
+                    });
+                } else if (paymentMethod === "qrcode") {
+                    // Thanh toán QR Code
+                    handleGenerateQR();
+                }
+            });
+
+            $('input[name="paymentMethod"]').on('change', function () {
+                $('input[name="paymentMethod"]').not(this).prop('checked', false);
+            });
+
+            function handleGenerateQR() {
+                const totalPriceText = $("#finalPrice").text().replace(/[^0-9.-]+/g, '');
+                const totalPrice = parseFloat(totalPriceText);
+                if (isNaN(totalPrice) || totalPrice <= 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Cảnh báo',
+                        text: 'Chưa có sản phẩm nào trong giỏ hàng!'
+                    });
+                    return;
+                }
+
+                const formData = $('#checkout-form').serialize() + "&orderDescription=" + currentOrderDescription;
+                $.ajax({
+                    url: '@Url.Action("Checkout", "CheckOut")',
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        if (response.success) {
+                            $("#qrImage").attr("src", response.qrUrl);
+                            $("#qrAmount").text(totalPriceText + "đ");
+                            $(".qr-code-section").show();
+                            $("#placeOrderBtn").hide();
+
+                            let remainingTime = response.totalTime;
+                            checkPayment(response.transactionId, remainingTime);
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi',
+                                text: response.message
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi',
+                            text: 'Đã xảy ra lỗi khi tạo giao dịch.'
+                        });
+                    }
+                });
+            }
+
+            function checkPayment(transactionId, remainingTime) {
+                let interval = setInterval(function () {
+                    if (isProcessing) {
+                        console.log("Đang xử lý giao dịch, bỏ qua lần kiểm tra này.");
+                        return; // Bỏ qua nếu đang xử lý
+                    }
+
+                    const minutes = Math.floor(remainingTime / 60);
+                    const seconds = remainingTime % 60;
+                    $("#countdown").text(`${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
+                    remainingTime--;
+
+                    isProcessing = true; // Đánh dấu đang xử lý
+                    $.ajax({
+                        url: '@Url.Action("CheckQRPayment", "CheckOut")',
+                        type: 'POST',
+                        data: { transactionId: transactionId, remainingTime: remainingTime },
+                        success: function (response) {
+                            if (response.status === "success") {
+                                clearInterval(interval); // Dừng ngay lập tức
+                                $(".qr-code-section").html(`
+                                            <div class="text-center">
+                                                <i class="fa fa-check-circle text-success" style="font-size: 50px;"></i>
+                                                <p class="mt-3 h5">Thanh toán thành công!</p>
+                                            </div>
+                                        `);
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Thanh toán thành công',
+                                    text: response.message,
+                                    timer: 1500
+                                }).then(() => {
+                                    window.location.href = '@Url.Action("Index", "Cart")';
+                                });
+                            } else if (response.status === "expired") {
+                                clearInterval(interval);
+                                $(".qr-code-section").html(`
+                                            <div class="text-center">
+                                                <i class="fa fa-exclamation-circle text-warning" style="font-size: 50px;"></i>
+                                                <p class="mt-3 h5">Thời gian thanh toán đã hết. Vui lòng thử lại!</p>
+                                            </div>
+                                        `);
+                                setTimeout(function () {
+                                    $(".qr-code-section").hide();
+                                    $("#placeOrderBtn").show();
+                                    window.location.href = '@Url.Action("Index", "Cart")';
+                                }, 5000);
+                            }
+                        },
+                        error: function () {
+                            console.error("Không thể kiểm tra trạng thái giao dịch.");
+                        },
+                        complete: function () {
+                            isProcessing = false; // Kết thúc xử lý
+                        }
+                    });
+
+                    if (remainingTime <= 0) {
+                        clearInterval(interval);
+                    }
+                }, 2000);
+            }
+        });
+    </script>
+}

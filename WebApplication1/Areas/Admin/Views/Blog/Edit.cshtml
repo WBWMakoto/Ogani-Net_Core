@@ -1,0 +1,54 @@
+﻿@model WebApplication1.Models.BlogViewModel
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="text-center mt-4">Chỉnh sửa bài viết</h2>
+
+<div class="card shadow-sm p-4">
+    <form asp-area="Admin" asp-controller="Blog" asp-action="Edit" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="CreatedDate" />
+
+        <div class="form-group">
+            <label asp-for="Title" class="font-weight-bold">Tiêu đề</label>
+            <input asp-for="Title" class="form-control" name="Title" value="@Model.Title" required placeholder="Nhập tiêu đề bài viết..." />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Content" class="font-weight-bold">Nội dung</label>
+            <textarea asp-for="Content" class="form-control" name="Content" rows="5" placeholder="Nhập nội dung bài viết...">@Model.Content</textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ImageUrl" class="font-weight-bold">Hình ảnh</label>
+            <input asp-for="ImageUrl" class="form-control" name="ImageUrl" value="@Model.ImageUrl" placeholder="Nhập URL hình ảnh..." />
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <div class="mt-2">
+                    <img src="@Model.ImageUrl" alt="@Model.Title" class="img-thumbnail" style="width: 150px; height: 150px;" />
+                </div>
+            }
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Author" class="font-weight-bold">Tác giả</label>
+            <input asp-for="Author" class="form-control" name="Author" value="@Model.Author" placeholder="Nhập tên tác giả..." />
+            <span asp-validation-for="Author" class="text-danger"></span>
+        </div>
+
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-success px-4">Lưu thay đổi</button>
+            <a asp-action="Index" class="btn btn-secondary px-4 ml-2">Quay lại</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

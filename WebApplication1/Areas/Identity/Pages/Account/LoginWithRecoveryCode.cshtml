@@ -1,0 +1,31 @@
+﻿@page
+@model LoginWithRecoveryCodeModel
+@{
+    ViewData["Title"] = "Xác minh bằng mã khôi phục";
+}
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%; border-radius: 10px;">
+        <div class="text-center mb-4">
+            <h3 class="fw-bold">🔑 Xác minh bằng mã khôi phục</h3>
+            <p class="text-muted">Nhập mã khôi phục của bạn để tiếp tục đăng nhập.</p>
+        </div>
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="Input.RecoveryCode" class="form-label fw-semibold">Mã khôi phục</label>
+                <input asp-for="Input.RecoveryCode" class="form-control rounded-pill text-center" autocomplete="off" placeholder="Nhập mã khôi phục" />
+                <span asp-validation-for="Input.RecoveryCode" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-success w-100 rounded-pill">Đăng nhập</button>
+        </form>
+        <div class="text-center mt-3">
+            <p class="text-muted">Bạn có mã xác thực không?</p>
+            <a asp-page="./LoginWith2fa" class="text-success">Đăng nhập bằng mã 2FA</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

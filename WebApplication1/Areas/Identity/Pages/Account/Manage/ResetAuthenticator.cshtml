@@ -1,0 +1,38 @@
+﻿@page
+@model ResetAuthenticatorModel
+@{
+    ViewData["Title"] = "Đặt lại khóa xác thực";
+    ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
+}
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 shadow-lg" style="max-width: 450px; width: 100%; border-radius: 10px;">
+        <h2 class="text-center fw-bold"><i class="fas fa-key"></i> @ViewData["Title"]</h2>
+
+        <partial name="_StatusMessage" for="StatusMessage" />
+
+        <div class="alert alert-warning mt-3" role="alert">
+            <p class="fw-bold"><i class="fas fa-exclamation-triangle"></i> Nếu bạn đặt lại khóa xác thực, ứng dụng xác thực của bạn sẽ không hoạt động cho đến khi bạn cấu hình lại.</p>
+            <p>
+                Quá trình này sẽ vô hiệu hóa xác thực hai yếu tố (2FA) cho đến khi bạn xác minh lại ứng dụng xác thực.
+                Nếu bạn không hoàn tất cấu hình ứng dụng, bạn có thể mất quyền truy cập vào tài khoản của mình.
+            </p>
+        </div>
+
+        <form id="reset-authenticator-form" method="post">
+            <button id="reset-authenticator-button" class="btn btn-danger w-100">
+                <i class="fas fa-sync-alt"></i> Đặt lại khóa xác thực
+            </button>
+        </form>
+
+        <div class="text-center mt-3">
+            <a asp-page="./TwoFactorAuthentication" class="btn btn-link">
+                <i class="fas fa-arrow-left"></i> Quay lại
+            </a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

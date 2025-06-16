@@ -1,0 +1,74 @@
+﻿@page
+@model ExternalLoginsModel
+@{
+    ViewData["Title"] = "Quản lý đăng nhập bên ngoài";
+    ViewData["ActivePage"] = ManageNavPages.ExternalLogins;
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg p-4">
+        <h2 class="text-center text-primary">
+            <i class="fas fa-user-lock"></i> @ViewData["Title"]
+        </h2>
+        <partial name="_StatusMessage" for="StatusMessage" />
+
+        @if (Model.CurrentLogins?.Count > 0)
+        {
+            <h4 class="mt-3">Tài khoản đã liên kết</h4>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nhà cung cấp</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var login in Model.CurrentLogins)
+                    {
+                        <tr>
+                            <td id="@($"login-provider-{login.LoginProvider}")">
+                                <i class="fas fa-sign-in-alt"></i> @login.ProviderDisplayName
+                            </td>
+                            <td>
+                                @if (Model.ShowRemoveButton)
+                                {
+                                    <form id="@($"remove-login-{login.LoginProvider}")" asp-page-handler="RemoveLogin" method="post" class="d-inline">
+                                        <input asp-for="@login.LoginProvider" name="LoginProvider" type="hidden" />
+                                        <input asp-for="@login.ProviderKey" name="ProviderKey" type="hidden" />
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash-alt"></i> Xóa
+                                        </button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Không thể xóa</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        @if (Model.OtherLogins?.Count > 0)
+        {
+            <h4 class="mt-4">Thêm phương thức đăng nhập khác</h4>
+            <hr />
+            <form id="link-login-form" asp-page-handler="LinkLogin" method="post">
+                <div class="d-flex flex-wrap gap-2">
+                    @foreach (var provider in Model.OtherLogins)
+                    {
+                        <button id="@($"link-login-button-{provider.Name}")" type="submit" class="btn btn-outline-primary">
+                            <i class="fas fa-plus"></i> @provider.DisplayName
+                        </button>
+                    }
+                </div>
+            </form>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,240 @@
+﻿@{
+    ViewData["Title"] = "Bảng Điều Khiển Quản Trị";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Bảng Điều Khiển Quản Trị</h2>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Tổng Doanh Thu</h5>
+                <p class="card-text">@Model.TotalRevenue.ToString("C")</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Số Lượng Đơn Hàng</h5>
+                <p class="card-text">@Model.NumberOfOrders</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Giá Trị Trung Bình Đơn Hàng</h5>
+                <p class="card-text">@Model.AverageOrderValue.ToString("C")</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3>Top 5 Sản Phẩm Theo Doanh Thu</h3>
+<canvas id="topProductsChart"></canvas>
+
+<h3>Top 5 Danh Mục Theo Doanh Thu</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Danh Mục</th>
+            <th>Doanh Thu</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model.TopCategories)
+        {
+            <tr>
+                <td>@category.CategoryName</td>
+                <td>@category.Revenue.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Top 5 Đơn Hàng Theo Giá Trị</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID Đơn Hàng</th>
+            <th>Tổng Tiền</th>
+            <th>ID Người Dùng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.TopOrders)
+        {
+            <tr>
+                <td>@order.OrderId</td>
+                <td>@order.TotalAmount.ToString("C")</td>
+                <td>@order.UserName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Phân Bố Trạng Thái Đơn Hàng</h3>
+<canvas id="orderStatusChart"></canvas>
+
+<h3>Doanh Thu Theo Thời Gian</h3>
+<canvas id="salesOverTimeChart"></canvas>
+
+<h3>Thống Kê Blog</h3>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Số Lượng Bài Viết Blog</h5>
+                <p class="card-text">@Model.NumberOfBlogPosts</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Số Lượng Bình Luận</h5>
+                <p class="card-text">@Model.NumberOfComments</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3>Top 5 Bài Viết Blog Có Nhiều Bình Luận Nhất</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Bài Viết Blog</th>
+            <th>Số Lượng Bình Luận</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var blog in Model.MostCommentedBlogPosts)
+        {
+            <tr>
+                <td>@blog.Title</td>
+                <td>@blog.CommentCount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Thêm các thống kê mới -->
+<h3>Thống Kê Khác</h3>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Số Lượng Khách Hàng</h5>
+                <p class="card-text">@Model.NumberOfCustomers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Số Lượng Sản Phẩm</h5>
+                <p class="card-text">@Model.NumberOfProducts</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Số Lượng Đơn Hàng Trong Tháng</h5>
+                <p class="card-text">@Model.OrdersThisMonth</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Biểu đồ Top 5 Sản Phẩm
+        var ctx1 = document.getElementById('topProductsChart').getContext('2d');
+        var topProductsChart = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: [@foreach (var product in Model.TopProducts)
+        {
+            @Html.Raw($"'{product.ProductName}',")
+        }],
+                datasets: [{
+                    label: 'Doanh Thu',
+                    data: [@foreach (var product in Model.TopProducts)
+        {
+            @Html.Raw($"{product.Revenue},")
+        }],
+                    backgroundColor: '#28A745' // Màu xanh lá
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Biểu đồ Phân Bố Trạng Thái Đơn Hàng
+        var ctx2 = document.getElementById('orderStatusChart').getContext('2d');
+        var orderStatusChart = new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: [@foreach (var status in Model.OrderStatusDistribution)
+        {
+            @Html.Raw($"'{status.Status}',")
+        }],
+                datasets: [{
+                    data: [@foreach (var status in Model.OrderStatusDistribution)
+        {
+            @Html.Raw($"{status.Count},")
+        }],
+                    backgroundColor: ['#28A745', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'] // Màu xanh lá đầu tiên
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+
+        // Biểu đồ Doanh Thu Theo Thời Gian
+        var ctx3 = document.getElementById('salesOverTimeChart').getContext('2d');
+        var salesOverTimeChart = new Chart(ctx3, {
+            type: 'line',
+            data: {
+                labels: [@foreach (var sale in Model.SalesOverTime)
+        {
+            @Html.Raw($"'{sale.Date.ToString("yyyy-MM")}',")
+        }],
+                datasets: [{
+                    label: 'Doanh Thu',
+                    data: [@foreach (var sale in Model.SalesOverTime)
+        {
+            @Html.Raw($"{sale.Revenue},")
+        }],
+                    borderColor: '#28A745', // Màu xanh lá
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'month'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}
