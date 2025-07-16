@@ -9,7 +9,11 @@ GO
 USE DoAnNhom;
 GO
 
--- Create ASP.NET Core Identity tables first
+-- ================================================
+-- COMPLETE DATABASE SCHEMA - KIỂM TRA TOÀN BỘ
+-- ================================================
+
+-- 1. ASP.NET Core Identity Tables (7 tables)
 CREATE TABLE [dbo].[AspNetRoles] (
     [Id] NVARCHAR(450) NOT NULL,
     [Name] NVARCHAR(256) NULL,
@@ -35,14 +39,12 @@ CREATE TABLE [dbo].[AspNetUsers] (
     [LockoutEnd] DATETIMEOFFSET NULL,
     [LockoutEnabled] BIT NOT NULL,
     [AccessFailedCount] INT NOT NULL,
-    -- Thêm hai cột tùy chỉnh thiếu
+    -- Custom fields added
     [BirthDay] DATETIME2 NULL,
-    [DisPlayName] NVARCHAR(MAX) NULL,
+    [DisplayName] NVARCHAR(MAX) NULL,
     CONSTRAINT [PK_AspNetUsers] PRIMARY KEY ([Id])
 );
 GO
-
-
 
 CREATE TABLE [dbo].[AspNetUserRoles] (
     [UserId] NVARCHAR(450) NOT NULL,
@@ -93,51 +95,17 @@ CREATE TABLE [dbo].[AspNetUserTokens] (
 );
 GO
 
--- Create indexes for ASP.NET Core Identity tables
-CREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [dbo].[AspNetRoleClaims] ([RoleId]);
-GO
-CREATE UNIQUE INDEX [RoleNameIndex] ON [dbo].[AspNetRoles] ([NormalizedName]) WHERE [NormalizedName] IS NOT NULL;
-GO
-CREATE INDEX [IX_AspNetUserClaims_UserId] ON [dbo].[AspNetUserClaims] ([UserId]);
-GO
-CREATE INDEX [IX_AspNetUserLogins_UserId] ON [dbo].[AspNetUserLogins] ([UserId]);
-GO
-CREATE INDEX [IX_AspNetUserRoles_RoleId] ON [dbo].[AspNetUserRoles] ([RoleId]);
-GO
-CREATE INDEX [EmailIndex] ON [dbo].[AspNetUsers] ([NormalizedEmail]);
-GO
-CREATE UNIQUE INDEX [UserNameIndex] ON [dbo].[AspNetUsers] ([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL;
-GO
+-- 2. BUSINESS LOGIC TABLES
 
-
--- Table: BlogPosts
-CREATE TABLE [dbo].[BlogPosts] (
-    [Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-    [Title] NVARCHAR(MAX) NULL,
-    [Content] NVARCHAR(MAX) NULL,
-    [ImageUrl] NVARCHAR(MAX) NULL,
-    [CreatedDate] DATETIME2(7) NULL,
-    [Author] NVARCHAR(MAX) NULL
-);
-
--- Table: Comments
-CREATE TABLE [dbo].[Comments] (
-    [Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-    [Content] NVARCHAR(MAX) NULL,
-    [UserId] NVARCHAR(MAX) NULL,
-    [CreatedDate] DATETIME2(7) NULL,
-    [BlogPostId] INT NULL,
-    FOREIGN KEY ([BlogPostId]) REFERENCES [dbo].[BlogPosts]([Id])
-);
-
--- Table: Categories
+-- Categories Table
 CREATE TABLE [dbo].[Categories] (
     [Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [Name] NVARCHAR(MAX) NULL,
     [Description] NVARCHAR(MAX) NULL
 );
+GO
 
--- Table: Products
+-- Products Table
 CREATE TABLE [dbo].[Products] (
     [Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [Name] NVARCHAR(MAX) NULL,
@@ -148,22 +116,54 @@ CREATE TABLE [dbo].[Products] (
     [CategoryId] INT NULL,
     [Discount] DECIMAL(18, 2) NULL,
     [Rating] FLOAT NULL,
-    FOREIGN KEY ([CategoryId]) REFERENCES [dbo].[Categories]([Id])
+    CONSTRAINT [FK_Products_Categories_CategoryId] FOREIGN KEY ([CategoryId]) REFERENCES [dbo].[Categories]([Id])
 );
+GO
 
+-- ProductImages Table
+CREATE TABLE [dbo].[ProductImages] (
+    [Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    [ImageUrl] NVARCHAR(MAX) NULL,
+    [ProductId] INT NULL,
+    CONSTRAINT [FK_ProductImages_Products_ProductId] FOREIGN KEY ([ProductId]) REFERENCES [dbo].[Products]([Id])
+);
+GO
+
+-- Reviews Table
 CREATE TABLE [dbo].[Reviews] (
     [Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [ProductId] INT NOT NULL,
     [Rating] INT NOT NULL,
     [Comment] NVARCHAR(MAX) NULL,
     [UserId] NVARCHAR(450) NULL,
-
-    FOREIGN KEY ([ProductId]) REFERENCES [dbo].[Products]([Id]),
-    FOREIGN KEY ([UserId]) REFERENCES [dbo].[AspNetUsers]([Id])
+    CONSTRAINT [FK_Reviews_Products_ProductId] FOREIGN KEY ([ProductId]) REFERENCES [dbo].[Products]([Id]),
+    CONSTRAINT [FK_Reviews_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [dbo].[AspNetUsers]([Id])
 );
 GO
 
--- Table: Orders
+-- BlogPosts Table
+CREATE TABLE [dbo].[BlogPosts] (
+    [Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    [Title] NVARCHAR(MAX) NULL,
+    [Content] NVARCHAR(MAX) NULL,
+    [ImageUrl] NVARCHAR(MAX) NULL,
+    [CreatedDate] DATETIME2(7) NULL,
+    [Author] NVARCHAR(MAX) NULL
+);
+GO
+
+-- Comments Table
+CREATE TABLE [dbo].[Comments] (
+    [Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    [Content] NVARCHAR(MAX) NULL,
+    [UserId] NVARCHAR(MAX) NULL,
+    [CreatedDate] DATETIME2(7) NULL,
+    [BlogPostId] INT NULL,
+    CONSTRAINT [FK_Comments_BlogPosts_BlogPostId] FOREIGN KEY ([BlogPostId]) REFERENCES [dbo].[BlogPosts]([Id])
+);
+GO
+
+-- Orders Table
 CREATE TABLE [dbo].[Orders] (
     [Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [UserId] NVARCHAR(MAX) NULL,
@@ -181,8 +181,9 @@ CREATE TABLE [dbo].[Orders] (
     [OrderNotes] NVARCHAR(MAX) NULL,
     [PaymentMethod] NVARCHAR(MAX) NULL
 );
+GO
 
--- Table: OrderDetails
+-- OrderDetails Table
 CREATE TABLE [dbo].[OrderDetails] (
     [Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
     [OrderId] INT NULL,
@@ -190,17 +191,85 @@ CREATE TABLE [dbo].[OrderDetails] (
     [Quantity] INT NULL,
     [UnitPrice] DECIMAL(18, 2) NULL,
     [IsComment] BIT NULL,
-    FOREIGN KEY ([OrderId]) REFERENCES [dbo].[Orders]([Id]),
-    FOREIGN KEY ([ProductId]) REFERENCES [dbo].[Products]([Id])
+    CONSTRAINT [FK_OrderDetails_Orders_OrderId] FOREIGN KEY ([OrderId]) REFERENCES [dbo].[Orders]([Id]),
+    CONSTRAINT [FK_OrderDetails_Products_ProductId] FOREIGN KEY ([ProductId]) REFERENCES [dbo].[Products]([Id])
 );
+GO
 
--- Table: ProductImages
-CREATE TABLE [dbo].[ProductImages] (
+-- Transactions Table
+CREATE TABLE [dbo].[Transactions] (
     [Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-    [ImageUrl] NVARCHAR(MAX) NULL,
-    [ProductId] INT NULL,
-    FOREIGN KEY ([ProductId]) REFERENCES [dbo].[Products]([Id])
+    [OrderDescription] NVARCHAR(MAX) NULL,
+    [Amount] DECIMAL(18, 2) NULL,
+    [Status] NVARCHAR(MAX) NULL,
+    [CreatedAt] DATETIME2(7) NULL,
+    [UpdatedAt] DATETIME2(7) NULL,
+    [OrderId] INT NULL,
+    CONSTRAINT [FK_Transactions_Orders_OrderId] FOREIGN KEY ([OrderId]) REFERENCES [dbo].[Orders]([Id])
 );
+GO
+
+
+-- Tạo table CartItems
+CREATE TABLE CartItems (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    ProductId INT NOT NULL,
+    ProductName NVARCHAR(255) NOT NULL,
+    Price DECIMAL(18,2) NOT NULL,
+    ImageUrl NVARCHAR(500),
+    Quantity INT NOT NULL DEFAULT 1,
+    CreatedDate DATETIME2 DEFAULT GETDATE(),
+    UpdatedDate DATETIME2 DEFAULT GETDATE()
+);
+GO
+-- Thêm indexes để tối ưu performance
+CREATE INDEX IX_CartItems_ProductId ON CartItems(ProductId);
+
+-- Thêm constraints
+ALTER TABLE CartItems 
+ADD CONSTRAINT CK_CartItems_Price CHECK (Price >= 0);
+
+ALTER TABLE CartItems 
+ADD CONSTRAINT CK_CartItems_Quantity CHECK (Quantity > 0);
+
+-- Computed column cho Total (tương tự như property Total trong C#)
+ALTER TABLE CartItems 
+ADD Total AS (Price * Quantity) PERSISTED;
+
+
+-- 3. INDEXES FOR PERFORMANCE
+CREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [dbo].[AspNetRoleClaims] ([RoleId]);
+GO
+CREATE UNIQUE INDEX [RoleNameIndex] ON [dbo].[AspNetRoles] ([NormalizedName]) WHERE [NormalizedName] IS NOT NULL;
+GO
+CREATE INDEX [IX_AspNetUserClaims_UserId] ON [dbo].[AspNetUserClaims] ([UserId]);
+GO
+CREATE INDEX [IX_AspNetUserLogins_UserId] ON [dbo].[AspNetUserLogins] ([UserId]);
+GO
+CREATE INDEX [IX_AspNetUserRoles_RoleId] ON [dbo].[AspNetUserRoles] ([RoleId]);
+GO
+CREATE INDEX [EmailIndex] ON [dbo].[AspNetUsers] ([NormalizedEmail]);
+GO
+CREATE UNIQUE INDEX [UserNameIndex] ON [dbo].[AspNetUsers] ([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL;
+GO
+
+-- Business logic indexes
+CREATE INDEX [IX_Products_CategoryId] ON [dbo].[Products] ([CategoryId]);
+GO
+CREATE INDEX [IX_ProductImages_ProductId] ON [dbo].[ProductImages] ([ProductId]);
+GO
+CREATE INDEX [IX_Reviews_ProductId] ON [dbo].[Reviews] ([ProductId]);
+GO
+CREATE INDEX [IX_Reviews_UserId] ON [dbo].[Reviews] ([UserId]);
+GO
+CREATE INDEX [IX_Comments_BlogPostId] ON [dbo].[Comments] ([BlogPostId]);
+GO
+CREATE INDEX [IX_OrderDetails_OrderId] ON [dbo].[OrderDetails] ([OrderId]);
+GO
+CREATE INDEX [IX_OrderDetails_ProductId] ON [dbo].[OrderDetails] ([ProductId]);
+GO
+CREATE INDEX [IX_Transactions_OrderId] ON [dbo].[Transactions] ([OrderId]);
+GO
 
 
 --
