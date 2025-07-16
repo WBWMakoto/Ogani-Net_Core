@@ -1,4 +1,4 @@
-﻿--
+--
 IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'DoAnNhom')
 BEGIN
     CREATE DATABASE DoAnNhom;
@@ -8,6 +8,107 @@ GO
 --
 USE DoAnNhom;
 GO
+
+-- Create ASP.NET Core Identity tables first
+CREATE TABLE [dbo].[AspNetRoles] (
+    [Id] NVARCHAR(450) NOT NULL,
+    [Name] NVARCHAR(256) NULL,
+    [NormalizedName] NVARCHAR(256) NULL,
+    [ConcurrencyStamp] NVARCHAR(MAX) NULL,
+    CONSTRAINT [PK_AspNetRoles] PRIMARY KEY ([Id])
+);
+GO
+
+CREATE TABLE [dbo].[AspNetUsers] (
+    [Id] NVARCHAR(450) NOT NULL,
+    [UserName] NVARCHAR(256) NULL,
+    [NormalizedUserName] NVARCHAR(256) NULL,
+    [Email] NVARCHAR(256) NULL,
+    [NormalizedEmail] NVARCHAR(256) NULL,
+    [EmailConfirmed] BIT NOT NULL,
+    [PasswordHash] NVARCHAR(MAX) NULL,
+    [SecurityStamp] NVARCHAR(MAX) NULL,
+    [ConcurrencyStamp] NVARCHAR(MAX) NULL,
+    [PhoneNumber] NVARCHAR(MAX) NULL,
+    [PhoneNumberConfirmed] BIT NOT NULL,
+    [TwoFactorEnabled] BIT NOT NULL,
+    [LockoutEnd] DATETIMEOFFSET NULL,
+    [LockoutEnabled] BIT NOT NULL,
+    [AccessFailedCount] INT NOT NULL,
+    -- Thêm hai cột tùy chỉnh thiếu
+    [BirthDay] DATETIME2 NULL,
+    [DisPlayName] NVARCHAR(MAX) NULL,
+    CONSTRAINT [PK_AspNetUsers] PRIMARY KEY ([Id])
+);
+GO
+
+
+
+CREATE TABLE [dbo].[AspNetUserRoles] (
+    [UserId] NVARCHAR(450) NOT NULL,
+    [RoleId] NVARCHAR(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserRoles] PRIMARY KEY ([UserId], [RoleId]),
+    CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+GO
+
+CREATE TABLE [dbo].[AspNetRoleClaims] (
+    [Id] INT IDENTITY (1, 1) NOT NULL,
+    [RoleId] NVARCHAR (450) NOT NULL,
+    [ClaimType] NVARCHAR (MAX) NULL,
+    [ClaimValue] NVARCHAR (MAX) NULL,
+    CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE
+);
+GO
+
+CREATE TABLE [dbo].[AspNetUserClaims] (
+    [Id] INT IDENTITY (1, 1) NOT NULL,
+    [UserId] NVARCHAR (450) NOT NULL,
+    [ClaimType] NVARCHAR (MAX) NULL,
+    [ClaimValue] NVARCHAR (MAX) NULL,
+    CONSTRAINT [PK_AspNetUserClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+GO
+
+CREATE TABLE [dbo].[AspNetUserLogins] (
+    [LoginProvider] NVARCHAR (128) NOT NULL,
+    [ProviderKey] NVARCHAR (128) NOT NULL,
+    [ProviderDisplayName] NVARCHAR (MAX) NULL,
+    [UserId] NVARCHAR (450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserLogins] PRIMARY KEY ([LoginProvider], [ProviderKey]),
+    CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+GO
+
+CREATE TABLE [dbo].[AspNetUserTokens] (
+    [UserId] NVARCHAR (450) NOT NULL,
+    [LoginProvider] NVARCHAR (128) NOT NULL,
+    [Name] NVARCHAR (128) NOT NULL,
+    [Value] NVARCHAR (MAX) NULL,
+    CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY ([UserId], [LoginProvider], [Name]),
+    CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+GO
+
+-- Create indexes for ASP.NET Core Identity tables
+CREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [dbo].[AspNetRoleClaims] ([RoleId]);
+GO
+CREATE UNIQUE INDEX [RoleNameIndex] ON [dbo].[AspNetRoles] ([NormalizedName]) WHERE [NormalizedName] IS NOT NULL;
+GO
+CREATE INDEX [IX_AspNetUserClaims_UserId] ON [dbo].[AspNetUserClaims] ([UserId]);
+GO
+CREATE INDEX [IX_AspNetUserLogins_UserId] ON [dbo].[AspNetUserLogins] ([UserId]);
+GO
+CREATE INDEX [IX_AspNetUserRoles_RoleId] ON [dbo].[AspNetUserRoles] ([RoleId]);
+GO
+CREATE INDEX [EmailIndex] ON [dbo].[AspNetUsers] ([NormalizedEmail]);
+GO
+CREATE UNIQUE INDEX [UserNameIndex] ON [dbo].[AspNetUsers] ([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL;
+GO
+
 
 -- Table: BlogPosts
 CREATE TABLE [dbo].[BlogPosts] (
@@ -46,9 +147,21 @@ CREATE TABLE [dbo].[Products] (
     [ImageUrl] NVARCHAR(MAX) NULL,
     [CategoryId] INT NULL,
     [Discount] DECIMAL(18, 2) NULL,
-    [Rating] INT NULL,
+    [Rating] FLOAT NULL,
     FOREIGN KEY ([CategoryId]) REFERENCES [dbo].[Categories]([Id])
 );
+
+CREATE TABLE [dbo].[Reviews] (
+    [Id] INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+    [ProductId] INT NOT NULL,
+    [Rating] INT NOT NULL,
+    [Comment] NVARCHAR(MAX) NULL,
+    [UserId] NVARCHAR(450) NULL,
+
+    FOREIGN KEY ([ProductId]) REFERENCES [dbo].[Products]([Id]),
+    FOREIGN KEY ([UserId]) REFERENCES [dbo].[AspNetUsers]([Id])
+);
+GO
 
 -- Table: Orders
 CREATE TABLE [dbo].[Orders] (
