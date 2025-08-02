@@ -1,0 +1,60 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Đăng ký tài khoản";
+}
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 shadow-lg" style="max-width: 450px; width: 100%; border-radius: 10px;">
+        <div class="text-center mb-3">
+            <h3 class="fw-bold">📝 Đăng ký tài khoản</h3>
+            <p class="text-muted">Tạo tài khoản mới để tiếp tục</p>
+        </div>
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="mb-3">
+                <label asp-for="Input.Email" class="form-label fw-semibold">Email</label>
+                <input asp-for="Input.Email" class="form-control rounded-pill" placeholder="Nhập email của bạn" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Input.Password" class="form-label fw-semibold">Mật khẩu</label>
+                <input asp-for="Input.Password" type="password" class="form-control rounded-pill" placeholder="Nhập mật khẩu" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Input.ConfirmPassword" class="form-label fw-semibold">Xác nhận mật khẩu</label>
+                <input asp-for="Input.ConfirmPassword" type="password" class="form-control rounded-pill" placeholder="Nhập lại mật khẩu" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-success w-100 rounded-pill">Đăng ký</button>
+        </form>
+        <hr>
+        <div class="text-center">
+            <h6>Hoặc đăng ký bằng</h6>
+            @if ((Model.ExternalLogins?.Count ?? 0) == 0)
+            {
+                <p class="text-muted">Không có phương thức đăng nhập bên thứ ba được cấu hình.</p>
+            }
+            else
+            {
+                <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    @foreach (var provider in Model.ExternalLogins)
+                    {
+                        <button type="submit" class="btn btn-outline-primary w-100 rounded-pill mt-2" name="provider" value="@provider.Name">
+                            <i class="fa fa-sign-in"></i> Đăng ký với @provider.DisplayName
+                        </button>
+                    }
+                </form>
+            }
+        </div>
+        <div class="text-center mt-3">
+            <span>Đã có tài khoản?</span>
+            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="text-success">Đăng nhập</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

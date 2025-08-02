@@ -1,0 +1,216 @@
+﻿@model WebApplication1.Models.Order
+
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Chi tiết đơn hàng #@Model.Id</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Order", new { area = "Admin" })">Đơn hàng</a></li>
+                    <li class="breadcrumb-item active">Chi tiết</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Thông báo -->
+        <div id="statusMessage" style="display: none;" class="alert alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <h5><i id="statusIcon" class="icon"></i> Thông báo</h5>
+            <span id="statusText"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Thông tin khách hàng</h3>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4">Họ và tên:</dt>
+                            <dd class="col-sm-8">@Model.FirstName @Model.LastName</dd>
+                            <dt class="col-sm-4">Email:</dt>
+                            <dd class="col-sm-8">@Model.Email</dd>
+                            <dt class="col-sm-4">Số điện thoại:</dt>
+                            <dd class="col-sm-8">@Model.Phone</dd>
+                            <dt class="col-sm-4">Địa chỉ:</dt>
+                            <dd class="col-sm-8">@Model.Address, @Model.Address2, @Model.City, @Model.Country</dd>
+                            <dt class="col-sm-4">Ghi chú:</dt>
+                            <dd class="col-sm-8">@Model.OrderNotes</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Thông tin đơn hàng</h3>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4">Mã đơn hàng:</dt>
+                            <dd class="col-sm-8">@Model.Id</dd>
+                            <dt class="col-sm-4">Ngày đặt hàng:</dt>
+                            <dd class="col-sm-8">@Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</dd>
+                            <dt class="col-sm-4">Tổng tiền:</dt>
+                            <dd class="col-sm-8">@Model.TotalAmount.ToString("N0") VNĐ</dd>
+                            <dt class="col-sm-4">Trạng thái:</dt>
+                            <dd class="col-sm-8" id="orderStatus">@Model.Status</dd>
+                            <dt class="col-sm-4">Phương thức thanh toán:</dt>
+                            <dd class="col-sm-8">@Model.PaymentMethod</dd>
+                        </dl>
+
+                        <!-- Dropdown và nút cập nhật trạng thái -->
+                        <div class="form-group">
+                            <label for="statusSelect">Cập nhật trạng thái:</label>
+                            <select id="statusSelect" class="form-control">
+                                <option value="" disabled selected>Chọn trạng thái</option>
+                                <option value="Shipped">Đang vận chuyển</option>
+                                <option value="Delivered">Đã giao hàng</option>
+                                <option value="Cancelled">Đã hủy</option>
+                            </select>
+                        </div>
+                        <button id="updateStatusBtn" class="btn btn-primary" data-order-id="@Model.Id">Cập nhật trạng thái</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Chi tiết sản phẩm</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Số lượng</th>
+                                    <th>Đơn giá</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var detail in Model.OrderDetails)
+                                {
+                                    <tr>
+                                        <td>@detail.Product?.Name</td>
+                                        <td>@detail.Quantity</td>
+                                        <td>@detail.UnitPrice.ToString("N0") VNĐ</td>
+                                        <td>@((detail.Quantity * detail.UnitPrice).ToString("N0")) VNĐ</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <a href="@Url.Action("Index", "Order", new { area = "Admin" })" class="btn btn-secondary">Quay lại</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Đảm bảo có token chống giả mạo -->
+<form id="statusForm" style="display: none;">
+    @Html.AntiForgeryToken()
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#updateStatusBtn').click(function () {
+                var orderId = $(this).data('order-id');
+                var newStatus = $('#statusSelect').val();
+                var token = $('input[name="__RequestVerificationToken"]').val();
+
+                console.log('Sending AJAX request with:');
+                console.log('Order ID: ' + orderId);
+                console.log('New Status: ' + newStatus);
+                console.log('Token: ' + token);
+
+                if (!newStatus) {
+                    showStatusMessage('Vui lòng chọn trạng thái.', false);
+                    return;
+                }
+
+                if (!token) {
+                    showStatusMessage('Không tìm thấy token chống giả mạo.', false);
+                    return;
+                }
+
+                $.ajax({
+                    url: '/Admin/Order/UpdateStatus',
+                    type: 'POST',
+                    contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                    data: {
+                        id: orderId,
+                        status: newStatus,
+                        __RequestVerificationToken: token
+                    },
+                    success: function (response) {
+                        console.log('AJAX Success:');
+                        console.log(response);
+                        if (response.success) {
+                            $('#orderStatus').text(newStatus);
+                            showStatusMessage('Cập nhật trạng thái thành công!', true);
+                        } else {
+                            showStatusMessage(response.message || 'Có lỗi xảy ra khi cập nhật trạng thái.', false);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('AJAX Error - Status: ' + status + ', Error: ' + error);
+                        console.log('Response Text: ' + xhr.responseText);
+                        showStatusMessage('Có lỗi xảy ra khi gửi yêu cầu: ' + error + ' (Status: ' + xhr.status + ')', false);
+                    }
+                });
+            });
+
+            function showStatusMessage(message, isSuccess) {
+                var messageDiv = $('#statusMessage');
+                var icon = $('#statusIcon');
+                var text = $('#statusText');
+
+                messageDiv.removeClass('alert-success alert-danger');
+                icon.removeClass('fas fa-check fas fa-exclamation-triangle');
+
+                if (isSuccess) {
+                    messageDiv.addClass('alert-success');
+                    icon.addClass('fas fa-check');
+                } else {
+                    messageDiv.addClass('alert-danger');
+                    icon.addClass('fas fa-exclamation-triangle');
+                }
+
+                text.text(message);
+                messageDiv.show();
+
+                setTimeout(function () {
+                    messageDiv.fadeOut();
+                }, 3000);
+            }
+        });
+    </script>
+}

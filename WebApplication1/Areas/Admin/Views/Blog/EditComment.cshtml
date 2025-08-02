@@ -1,0 +1,37 @@
+﻿@model WebApplication1.Models.Comment
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="text-center mt-4">Chỉnh sửa bình luận</h2>
+
+<div class="card shadow-sm p-4">
+    <form asp-area="Admin" asp-controller="Blog" asp-action="EditComment" method="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="BlogPostId" />
+        <input type="hidden" asp-for="CreatedDate" />
+
+        <div class="form-group">
+            <label asp-for="Content" class="font-weight-bold">Nội dung</label>
+            <textarea asp-for="Content" class="form-control" name="Content" rows="3" required placeholder="Nhập nội dung bình luận..."></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="UserId" class="font-weight-bold">Người dùng</label>
+            <input asp-for="UserId" class="form-control" name="UserId" readonly />
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+
+        <div class="text-center mt-3">
+            <button type="submit" class="btn btn-success px-4">Lưu thay đổi</button>
+            <a asp-action="Details" asp-route-id="@Model.BlogPostId" class="btn btn-secondary px-4 ml-2">Quay lại</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

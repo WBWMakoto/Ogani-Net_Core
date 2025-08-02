@@ -1,0 +1,47 @@
+﻿@model List<WebApplication1.Models.Category>
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card shadow-sm border-0 mt-4">
+    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+        <a href="@Url.Action("Create", "Categories", new { area = "Admin" })" class="btn btn-light shadow-sm">
+            <i class="fa fa-plus"></i> Thêm Mới
+        </a>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover table-bordered">
+            <thead class="bg-light">
+                <tr>
+                    <th>Tên Danh Mục</th>
+                    <th>Mô Tả</th>
+                    <th class="text-center">Hành Động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count > 0)
+                {
+                    @foreach (var category in Model)
+                    {
+                        <tr>
+                            <td>@category.Name</td>
+                            <td>@category.Description</td>
+                            <td class="text-center">
+                                <a href="@Url.Action("Edit", "Categories", new { area = "Admin", id = category.Id })" class="btn btn-warning btn-sm">Sửa</a>
+                                <a href="@Url.Action("Delete", "Categories", new { area = "Admin", id = category.Id })" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa danh mục này?');">Xóa</a>
+
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="3" class="text-center text-muted">Không có danh mục nào</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

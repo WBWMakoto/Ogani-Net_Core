@@ -1,0 +1,40 @@
+﻿@model WebApplication1.Models.Category
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card shadow-sm border-0 mt-4">
+    <div class="card-header bg-danger text-white">
+        <h4 class="mb-0">Xóa Danh Mục</h4>
+    </div>
+    <div class="card-body">
+        <h5 class="text-danger">Bạn có chắc chắn muốn xóa danh mục này?</h5>
+        <dl class="row">
+            <dt class="col-sm-3">Tên danh mục:</dt>
+            <dd class="col-sm-9">@Model.Name</dd>
+            <dt class="col-sm-3">Mô tả:</dt>
+            <dd class="col-sm-9">@Model.Description</dd>
+        </dl>
+        <form asp-action="Delete" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger btn-lg shadow-sm">
+                <i class="fa fa-trash"></i> Xóa
+            </button>
+            <a asp-action="Index" class="btn btn-secondary btn-lg shadow-sm ms-2">
+                <i class="fa fa-arrow-left"></i> Hủy
+            </a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelector('form').addEventListener('submit', function (e) {
+            if (!confirm('Bạn có chắc chắn muốn xóa danh mục này?')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+}

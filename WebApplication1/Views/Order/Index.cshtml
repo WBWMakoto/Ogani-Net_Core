@@ -1,0 +1,89 @@
+﻿@model List<WebApplication1.Models.Order>
+
+@{
+    ViewData["Title"] = "Đơn hàng của bạn";
+}
+
+<!-- Content Header (Page header) -->
+<section class="breadcrumb-section set-bg" data-setbg="images/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Đơn hàng của bạn</h2>
+                        <div class="breadcrumb__option">
+                            <a href="~/Home">Trang chủ</a>
+                            <span>Đơn hàng của bạn</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Main content -->
+    <section class="blog spad">
+        <div class="container">
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label for="statusFilter">Lọc theo trạng thái:</label>
+                <select id="statusFilter" class="form-control" asp-items="@ViewBag.Statuses" onchange="filterOrders()">
+                    <!-- asp-items sẽ tự động render các option -->
+                </select>
+            </div>
+        </div>
+
+        @if (Model.Any())
+        {
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Danh sách đơn hàng</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Mã đơn hàng</th>
+                                <th>Ngày đặt hàng</th>
+                                <th>Tổng tiền</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var order in Model)
+                            {
+                                <tr>
+                                    <td>#@order.Id</td>
+                                    <td>@order.OrderDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>@order.TotalAmount.ToString("N0") VNĐ</td>
+                                    <td>@order.Status</td>
+                                    <td>
+                                        <a href="@Url.Action("Details", "Order", new { id = order.Id })" class="btn btn-info btn-sm">Xem chi tiết</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                Bạn chưa có đơn hàng nào.
+            </div>
+        }
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        // Đặt giá trị đã chọn cho dropdown
+        document.getElementById("statusFilter").value = '@ViewBag.SelectedStatus';
+
+        function filterOrders() {
+            var status = document.getElementById("statusFilter").value;
+            window.location.href = '@Url.Action("Index", "Order")' + (status ? '?status=' + status : '');
+        }
+    </script>
+}

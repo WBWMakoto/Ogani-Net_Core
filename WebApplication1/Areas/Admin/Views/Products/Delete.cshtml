@@ -1,0 +1,56 @@
+﻿@model WebApplication1.Models.Product
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card shadow-sm border-0 mt-4">
+    <div class="card-header bg-danger text-white">
+        <h4 class="mb-0">Xóa Sản Phẩm</h4>
+    </div>
+    <div class="card-body">
+        <h5 class="text-danger">Bạn có chắc chắn muốn xóa sản phẩm này?</h5>
+        <dl class="row">
+            <dt class="col-sm-3">Hình ảnh chính:</dt>
+            <dd class="col-sm-9">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" alt="@Model.Name" class="img-thumbnail" style="width:80px;height:80px;" />
+                }
+            </dd>
+            <dt class="col-sm-3">Tên sản phẩm:</dt>
+            <dd class="col-sm-9">@Model.Name</dd>
+            <dt class="col-sm-3">Giá:</dt>
+            <dd class="col-sm-9 text-danger fw-bold">@Model.Price.ToString("C")</dd>
+            <dt class="col-sm-3">Danh mục:</dt>
+            <dd class="col-sm-9">@Model.Category?.Name</dd>
+            <dt class="col-sm-3">Hình ảnh phụ:</dt>
+            <dd class="col-sm-9">
+                @foreach (var image in Model.ProductImages)
+                {
+                    <img src="@image.ImageUrl" alt="@Model.Name" class="img-thumbnail m-1" style="width:60px;height:60px;" />
+                }
+            </dd>
+        </dl>
+        <form asp-action="Delete" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger btn-lg shadow-sm">
+                <i class="fa fa-trash"></i> Xóa
+            </button>
+            <a asp-action="Index" class="btn btn-secondary btn-lg shadow-sm ms-2">
+                <i class="fa fa-arrow-left"></i> Hủy
+            </a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelector('form').addEventListener('submit', function (e) {
+            if (!confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+                e.preventDefault();
+            }
+        });
+    </script>
+}

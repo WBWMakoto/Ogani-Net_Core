@@ -1,0 +1,334 @@
+﻿@model List<WebApplication1.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="/images/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Giỏ hàng</h2>
+                    <div class="breadcrumb__option">
+                        <a asp-controller="Home" asp-action="Index">Trang chủ</a>
+                        <span>Giỏ hàng</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+<!-- Shoping Cart Section Begin -->
+<section class="shoping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="shoping__product">Sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Tổng</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Any())
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr data-product-id="@item.ProductId">
+                                        <td class="shoping__cart__item">
+                                            <img src="@(string.IsNullOrEmpty(item.ImageUrl) ? "/images/cart/cart-1.jpg" : item.ImageUrl)" alt="@item.ProductName" style="width: 100px;">
+                                            <h5>@item.ProductName</h5>
+                                        </td>
+                                        <td class="shoping__cart__price">
+                                            @(item.Price % 1 == 0
+                                                ? item.Price.ToString("#,##0") + "đ"
+                                                : item.Price.ToString("#,##0.##") + "đ")
+                                        </td>
+                                        <td class="shoping__cart__quantity">
+                                            <div class="quantity">
+                                                <div class="pro-qty">
+                                                    <span class="dec qtybtn">-</span>
+                                                    <input type="text" value="@item.Quantity" class="quantity-input">
+                                                    <span class="inc qtybtn">+</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="shoping__cart__total">
+                                            @(item.Total % 1 == 0
+                                                ? item.Total.ToString("#,##0") + "đ"
+                                                : item.Total.ToString("#,##0.##") + "đ")
+                                        </td>
+                                        <td class="shoping__cart__item__close">
+                                            <a href="#" class="remove-from-cart" data-product-id="@item.ProductId">
+                                                <span class="icon_close"></span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="5" class="text-center">Giỏ hàng của bạn đang trống.</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shoping__cart__btns">
+                    <a asp-controller="Shop" asp-action="Index" class="primary-btn cart-btn">TIẾP TỤC MUA SẮM</a>
+                    <a href="#" class="primary-btn cart-btn cart-btn-right update-cart">
+                        <span class="icon_loading"></span>
+                        Cập nhật giỏ hàng
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="shoping__continue">
+                    <div class="shoping__discount">
+                        <h5>Mã giảm giá</h5>
+                        <form action="#">
+                            <input type="text" placeholder="Nhập mã giảm giá của bạn">
+                            <button type="submit" class="site-btn">ÁP DỤNG MÃ</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="shoping__checkout">
+                    <h5>Tổng giỏ hàng</h5>
+                    <ul>
+                        <li>
+                            Tạm tính <span class="cart-subtotal">
+                                @(Model?.Sum(item => item.Total) % 1 == 0
+                                    ? Model.Sum(item => item.Total).ToString("#,##0") + "đ"
+                                    : Model.Sum(item => item.Total).ToString("#,##0.##") + "đ")
+                            </span>
+                        </li>
+                        <li>
+                            Tổng cộng <span class="cart-total">
+                                @(Model?.Sum(item => item.Total) % 1 == 0
+                                    ? Model.Sum(item => item.Total).ToString("#,##0") + "đ"
+                                    : Model.Sum(item => item.Total).ToString("#,##0.##") + "đ")
+                            </span>
+                        </li>
+                    </ul>
+                    <a href="#" class="primary-btn place-order">ĐẶT HÀNG</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Shoping Cart Section End -->
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
+            // Xử lý tăng/giảm số lượng
+            $('.pro-qty').each(function () {
+                var $this = $(this);
+                var $input = $this.find('input.quantity-input');
+                var $dec = $this.find('.dec');
+                var $inc = $this.find('.inc');
+
+                $inc.off('click').on('click', function (e) {
+                    e.preventDefault();
+                    var productId = $this.closest('tr').data('product-id');
+                    var quantity = parseInt($input.val()) + 1;
+                    $input.val(quantity);
+                    updateCartItem(productId, quantity);
+                });
+
+                $dec.off('click').on('click', function (e) {
+                    e.preventDefault();
+                    var productId = $this.closest('tr').data('product-id');
+                    var quantity = parseInt($input.val()) - 1;
+                    $input.val(quantity);
+                    updateCartItem(productId, quantity);
+                });
+
+                $input.off('change').on('change', function () {
+                    var productId = $this.closest('tr').data('product-id');
+                    var quantity = parseInt($input.val());
+
+                    if (isNaN(quantity) || quantity < 0) {
+                        quantity = 0;
+                        $input.val(0);
+                    }
+
+                    updateCartItem(productId, quantity);
+                });
+            });
+
+            // Xử lý xóa sản phẩm khỏi giỏ hàng
+            $('.remove-from-cart').off('click').on('click', function (e) {
+                e.preventDefault();
+                var productId = $(this).data('product-id');
+
+                $.ajax({
+                    url: '@Url.Action("RemoveFromCart", "Cart")',
+                    type: 'POST',
+                    data: { productId: productId },
+                    success: function (response) {
+                        if (response.success) {
+                            $(`tr[data-product-id="${productId}"]`).remove();
+                            updateCartSummary(response.cartTotal, response.cartCount);
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thành công',
+                                text: response.message,
+                                timer: 1500
+                            });
+
+                            if ($('.shoping__cart__table tbody tr').length === 0) {
+                                $('.shoping__cart__table tbody').html('<tr><td colspan="5" class="text-center">Giỏ hàng của bạn đang trống.</td></tr>');
+                            }
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi',
+                                text: response.message
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi',
+                            text: 'Đã xảy ra lỗi khi xóa sản phẩm.'
+                        });
+                    }
+                });
+            });
+
+            // Xử lý cập nhật giỏ hàng
+            $('.update-cart').off('click').on('click', function (e) {
+                e.preventDefault();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Thành công',
+                    text: 'Giỏ hàng đã được cập nhật!',
+                    timer: 1500
+                });
+            });
+
+            // Xử lý nút "Đặt hàng" - Chuyển hướng sang trang Checkout
+            $('.place-order').off('click').on('click', function (e) {
+                e.preventDefault();
+
+                if ($('.shoping__cart__table tbody tr').length === 0) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Cảnh báo',
+                        text: 'Giỏ hàng của bạn đang trống. Vui lòng thêm sản phẩm để tiếp tục.'
+                    });
+                    return;
+                }
+
+                // Gửi yêu cầu AJAX để lưu giỏ hàng vào TempData và chuyển hướng
+                $.ajax({
+                    url: '@Url.Action("PrepareCheckout", "Cart")',
+                    type: 'POST',
+                    success: function (response) {
+                        if (response.success) {
+                            window.location.href = '@Url.Action("Index", "CheckOut")';
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi',
+                                text: response.message
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi',
+                            text: 'Đã xảy ra lỗi khi chuyển hướng đến trang thanh toán.'
+                        });
+                    }
+                });
+            });
+
+            // Hàm cập nhật số lượng sản phẩm
+            function updateCartItem(productId, quantity) {
+                $.ajax({
+                    url: '@Url.Action("UpdateQuantity", "Cart")',
+                    type: 'POST',
+                    data: { productId: productId, quantity: quantity },
+                    success: function (response) {
+                        if (response.success) {
+                            if (quantity <= 0) {
+                                $(`tr[data-product-id="${productId}"]`).remove();
+                                if ($('.shoping__cart__table tbody tr').length === 0) {
+                                    $('.shoping__cart__table tbody').html('<tr><td colspan="5" class="text-center">Giỏ hàng của bạn đang trống.</td></tr>');
+                                }
+                            } else {
+                                var $row = $(`tr[data-product-id="${productId}"]`);
+                                $row.find('.shoping__cart__total').text(
+                                    response.itemTotal % 1 === 0
+                                        ? response.itemTotal.toLocaleString('vi-VN') + 'đ'
+                                        : response.itemTotal.toLocaleString('vi-VN', { minimumFractionDigits: 2 }) + 'đ'
+                                );
+                            }
+
+                            updateCartSummary(response.cartTotal, response.cartCount);
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thành công',
+                                text: response.message,
+                                timer: 1500
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi',
+                                text: response.message
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi',
+                            text: 'Đã xảy ra lỗi khi cập nhật số lượng.'
+                        });
+                    }
+                });
+            }
+
+            // Hàm cập nhật tổng tiền và số lượng giỏ hàng
+            function updateCartSummary(cartTotal, cartCount) {
+                $('.cart-subtotal').text(
+                    cartTotal % 1 === 0
+                        ? cartTotal.toLocaleString('vi-VN') + 'đ'
+                        : cartTotal.toLocaleString('vi-VN', { minimumFractionDigits: 2 }) + 'đ'
+                );
+                $('.cart-total').text(
+                    cartTotal % 1 === 0
+                        ? cartTotal.toLocaleString('vi-VN') + 'đ'
+                        : cartTotal.toLocaleString('vi-VN', { minimumFractionDigits: 2 }) + 'đ'
+                );
+                $("#cart-count").text(cartCount);
+                $("#cart-count-mobile").text(cartCount);
+                $(".header__cart__price span").text(cartTotal.toLocaleString('vi-VN') + "đ");
+            }
+        });
+    </script>
+}

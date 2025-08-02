@@ -1,0 +1,541 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\css\\elegant-icons.css",
+      "PackagePath": "staticwebassets\\css\\elegant-icons.css"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\css\\font-awesome.min.css",
+      "PackagePath": "staticwebassets\\css\\font-awesome.min.css"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\css\\jquery-ui.min.css",
+      "PackagePath": "staticwebassets\\css\\jquery-ui.min.css"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\css\\nice-select.css",
+      "PackagePath": "staticwebassets\\css\\nice-select.css"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\css\\owl.carousel.min.css",
+      "PackagePath": "staticwebassets\\css\\owl.carousel.min.css"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\css\\slicknav.min.css",
+      "PackagePath": "staticwebassets\\css\\slicknav.min.css"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\css\\style.css",
+      "PackagePath": "staticwebassets\\css\\style.css"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\favicon.ico",
+      "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\fonts\\ElegantIcons.eot",
+      "PackagePath": "staticwebassets\\fonts\\ElegantIcons.eot"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\fonts\\ElegantIcons.svg",
+      "PackagePath": "staticwebassets\\fonts\\ElegantIcons.svg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\fonts\\ElegantIcons.ttf",
+      "PackagePath": "staticwebassets\\fonts\\ElegantIcons.ttf"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\fonts\\ElegantIcons.woff",
+      "PackagePath": "staticwebassets\\fonts\\ElegantIcons.woff"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\fonts\\FontAwesome.otf",
+      "PackagePath": "staticwebassets\\fonts\\FontAwesome.otf"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\fonts\\fontawesome-webfont.eot",
+      "PackagePath": "staticwebassets\\fonts\\fontawesome-webfont.eot"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\fonts\\fontawesome-webfont.svg",
+      "PackagePath": "staticwebassets\\fonts\\fontawesome-webfont.svg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\fonts\\fontawesome-webfont.ttf",
+      "PackagePath": "staticwebassets\\fonts\\fontawesome-webfont.ttf"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\fonts\\fontawesome-webfont.woff",
+      "PackagePath": "staticwebassets\\fonts\\fontawesome-webfont.woff"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\fonts\\fontawesome-webfont.woff2",
+      "PackagePath": "staticwebassets\\fonts\\fontawesome-webfont.woff2"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\banner\\banner-1.jpg",
+      "PackagePath": "staticwebassets\\images\\banner\\banner-1.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\banner\\banner-2.jpg",
+      "PackagePath": "staticwebassets\\images\\banner\\banner-2.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\blog\\blog-1.jpg",
+      "PackagePath": "staticwebassets\\images\\blog\\blog-1.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\blog\\blog-2.jpg",
+      "PackagePath": "staticwebassets\\images\\blog\\blog-2.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\blog\\blog-3.jpg",
+      "PackagePath": "staticwebassets\\images\\blog\\blog-3.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\blog\\blog-4.jpg",
+      "PackagePath": "staticwebassets\\images\\blog\\blog-4.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\blog\\blog-5.jpg",
+      "PackagePath": "staticwebassets\\images\\blog\\blog-5.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\blog\\blog-6.jpg",
+      "PackagePath": "staticwebassets\\images\\blog\\blog-6.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\blog\\details\\details-author.jpg",
+      "PackagePath": "staticwebassets\\images\\blog\\details\\details-author.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\blog\\details\\details-hero.jpg",
+      "PackagePath": "staticwebassets\\images\\blog\\details\\details-hero.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\blog\\details\\details-pic.jpg",
+      "PackagePath": "staticwebassets\\images\\blog\\details\\details-pic.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\blog\\sidebar\\sr-1.jpg",
+      "PackagePath": "staticwebassets\\images\\blog\\sidebar\\sr-1.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\blog\\sidebar\\sr-2.jpg",
+      "PackagePath": "staticwebassets\\images\\blog\\sidebar\\sr-2.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\blog\\sidebar\\sr-3.jpg",
+      "PackagePath": "staticwebassets\\images\\blog\\sidebar\\sr-3.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\breadcrumb.jpg",
+      "PackagePath": "staticwebassets\\images\\breadcrumb.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\cart\\cart-1.jpg",
+      "PackagePath": "staticwebassets\\images\\cart\\cart-1.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\cart\\cart-2.jpg",
+      "PackagePath": "staticwebassets\\images\\cart\\cart-2.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\cart\\cart-3.jpg",
+      "PackagePath": "staticwebassets\\images\\cart\\cart-3.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\categories\\cat-1.jpg",
+      "PackagePath": "staticwebassets\\images\\categories\\cat-1.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\categories\\cat-2.jpg",
+      "PackagePath": "staticwebassets\\images\\categories\\cat-2.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\categories\\cat-3.jpg",
+      "PackagePath": "staticwebassets\\images\\categories\\cat-3.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\categories\\cat-4.jpg",
+      "PackagePath": "staticwebassets\\images\\categories\\cat-4.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\categories\\cat-5.jpg",
+      "PackagePath": "staticwebassets\\images\\categories\\cat-5.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\featured\\feature-1.jpg",
+      "PackagePath": "staticwebassets\\images\\featured\\feature-1.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\featured\\feature-2.jpg",
+      "PackagePath": "staticwebassets\\images\\featured\\feature-2.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\featured\\feature-3.jpg",
+      "PackagePath": "staticwebassets\\images\\featured\\feature-3.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\featured\\feature-4.jpg",
+      "PackagePath": "staticwebassets\\images\\featured\\feature-4.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\featured\\feature-5.jpg",
+      "PackagePath": "staticwebassets\\images\\featured\\feature-5.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\featured\\feature-6.jpg",
+      "PackagePath": "staticwebassets\\images\\featured\\feature-6.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\featured\\feature-7.jpg",
+      "PackagePath": "staticwebassets\\images\\featured\\feature-7.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\featured\\feature-8.jpg",
+      "PackagePath": "staticwebassets\\images\\featured\\feature-8.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\hero\\banner.jpg",
+      "PackagePath": "staticwebassets\\images\\hero\\banner.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\language.png",
+      "PackagePath": "staticwebassets\\images\\language.png"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\latest-product\\lp-1.jpg",
+      "PackagePath": "staticwebassets\\images\\latest-product\\lp-1.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\latest-product\\lp-2.jpg",
+      "PackagePath": "staticwebassets\\images\\latest-product\\lp-2.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\latest-product\\lp-3.jpg",
+      "PackagePath": "staticwebassets\\images\\latest-product\\lp-3.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\logo.png",
+      "PackagePath": "staticwebassets\\images\\logo.png"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\payment-item.png",
+      "PackagePath": "staticwebassets\\images\\payment-item.png"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\details\\product-details-1.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\details\\product-details-1.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\details\\product-details-2.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\details\\product-details-2.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\details\\product-details-3.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\details\\product-details-3.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\details\\product-details-4.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\details\\product-details-4.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\details\\product-details-5.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\details\\product-details-5.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\details\\thumb-1.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\details\\thumb-1.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\details\\thumb-2.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\details\\thumb-2.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\details\\thumb-3.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\details\\thumb-3.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\details\\thumb-4.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\details\\thumb-4.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\discount\\pd-1.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\discount\\pd-1.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\discount\\pd-2.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\discount\\pd-2.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\discount\\pd-3.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\discount\\pd-3.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\discount\\pd-4.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\discount\\pd-4.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\discount\\pd-5.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\discount\\pd-5.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\discount\\pd-6.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\discount\\pd-6.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\product-1.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\product-1.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\product-10.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\product-10.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\product-11.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\product-11.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\product-12.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\product-12.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\product-2.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\product-2.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\product-3.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\product-3.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\product-4.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\product-4.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\product-5.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\product-5.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\product-6.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\product-6.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\product-7.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\product-7.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\product-8.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\product-8.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\images\\product\\product-9.jpg",
+      "PackagePath": "staticwebassets\\images\\product\\product-9.jpg"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\js\\jquery-3.3.1.min.js",
+      "PackagePath": "staticwebassets\\js\\jquery-3.3.1.min.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\js\\jquery-ui.min.js",
+      "PackagePath": "staticwebassets\\js\\jquery-ui.min.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\js\\jquery.nice-select.min.js",
+      "PackagePath": "staticwebassets\\js\\jquery.nice-select.min.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\js\\jquery.slicknav.js",
+      "PackagePath": "staticwebassets\\js\\jquery.slicknav.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\js\\main.js",
+      "PackagePath": "staticwebassets\\js\\main.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\js\\mixitup.min.js",
+      "PackagePath": "staticwebassets\\js\\mixitup.min.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\js\\owl.carousel.min.js",
+      "PackagePath": "staticwebassets\\js\\owl.carousel.min.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\LICENSE",
+      "PackagePath": "staticwebassets\\lib\\bootstrap"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.css.map"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-grid.min.css.map"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.css.map"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-reboot.min.css.map"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-theme.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-theme.css"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-theme.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-theme.css.map"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-theme.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-theme.min.css"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-theme.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap-theme.min.css.map"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.css.map"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js.map"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.min.js.map"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.js.map"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
+    },
+    {
+      "Id": "D:\\VS_projects\\Ogani-Net_Core\\WebApplication1\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.WebApplication1.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.WebApplication1.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.WebApplication1.props",
+      "PackagePath": "build\\WebApplication1.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.WebApplication1.props",
+      "PackagePath": "buildMultiTargeting\\WebApplication1.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.WebApplication1.props",
+      "PackagePath": "buildTransitive\\WebApplication1.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

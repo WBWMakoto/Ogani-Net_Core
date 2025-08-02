@@ -1,0 +1,173 @@
+﻿@model WebApplication1.Areas.Admin.Models.ProductViewModel
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card shadow-sm border-0 mt-4">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">Chỉnh Sửa Sản Phẩm</h4>
+    </div>
+    <div class="card-body">
+        <!-- Hiển thị thông báo lỗi nếu có -->
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <p>@error.ErrorMessage</p>
+                }
+            </div>
+        }
+
+        <form asp-action="Edit" asp-area="Admin" asp-controller="Products" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label">Tên sản phẩm</label>
+                <input asp-for="Name" class="form-control" name="Name" value="@Model.Name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label">Mô tả</label>
+                <textarea asp-for="Description" class="form-control" name="Description">@Model.Description</textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Price" class="form-label">Giá</label>
+                <input asp-for="Price" class="form-control" name="Price" type="number" step="1" value="@Model.Price.ToString("F0")" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="CategoryId" class="form-label">Danh mục</label>
+                <select asp-for="CategoryId" class="form-control" name="CategoryId" required>
+                    <option value="">-- Chọn danh mục --</option>
+                    @foreach (var category in ViewBag.Categories as List<WebApplication1.Models.Category>)
+                    {
+                        if (category.Id == Model.CategoryId)
+                        {
+                            <option value="@category.Id" selected>@category.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@category.Id">@category.Name</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ImageUrl" class="form-label">Ảnh chính</label>
+                <input asp-for="ImageUrl" class="form-control" name="ImageUrl" id="mainImageInput" placeholder="Nhập URL ảnh chính" value="@Model.ImageUrl" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                <div class="mt-2" id="mainImagePreview">
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <img src="@Model.ImageUrl" class="img-thumbnail" style="width: 150px; height: 150px;" />
+                    }
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Ảnh phụ</label>
+                <div id="subImagesContainer" class="mt-2">
+                    @{
+                        int index = 0;
+                        // Hiển thị các ảnh phụ hiện có (từ Model.ExistingSubImages)
+                        if (Model.ExistingSubImages != null && Model.ExistingSubImages.Any())
+                        {
+                            foreach (var image in Model.ExistingSubImages)
+                            {
+                                <div class="input-group mb-2">
+                                    <input type="text" name="SubImageUrls[@index]" class="form-control sub-image-input" value="@image.ImageUrl" placeholder="Nhập URL ảnh phụ" />
+                                    <button type="button" class="btn btn-danger remove-sub-image">Xóa</button>
+                                    <div class="sub-image-preview mt-2">
+                                        @if (!string.IsNullOrEmpty(image.ImageUrl))
+                                        {
+                                            <img src="@image.ImageUrl" class="img-thumbnail" style="width: 100px; height: 100px;" />
+                                        }
+                                    </div>
+                                </div>
+                                index++;
+                            }
+                        }
+
+                        // Hiển thị các ảnh phụ mới thêm (từ Model.SubImageUrls)
+                        if (Model.SubImageUrls != null && Model.SubImageUrls.Any())
+                        {
+                            for (int i = 0; i < Model.SubImageUrls.Count; i++)
+                            {
+                                <div class="input-group mb-2">
+                                    <input type="text" name="SubImageUrls[@index]" class="form-control sub-image-input" value="@Model.SubImageUrls[i]" placeholder="Nhập URL ảnh phụ" />
+                                    <button type="button" class="btn btn-danger remove-sub-image">Xóa</button>
+                                    <div class="sub-image-preview mt-2">
+                                        @if (!string.IsNullOrEmpty(Model.SubImageUrls[i]))
+                                        {
+                                            <img src="@Model.SubImageUrls[i]" class="img-thumbnail" style="width: 100px; height: 100px;" />
+                                        }
+                                    </div>
+                                </div>
+                                index++;
+                            }
+                        }
+                    }
+                </div>
+                <button type="button" id="addSubImage" class="btn btn-secondary mt-2">Thêm ảnh phụ</button>
+            </div>
+
+            <div class="text-end">
+                <button type="submit" class="btn btn-success">Lưu thay đổi</button>
+                <a asp-action="Index" class="btn btn-outline-secondary">Hủy</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById('addSubImage').addEventListener('click', function () {
+            const container = document.getElementById('subImagesContainer');
+            const index = container.children.length;
+            const newInput = document.createElement('div');
+            newInput.className = 'input-group mb-2';
+            newInput.innerHTML = `
+                        <input type="text" name="SubImageUrls[${index}]" class="form-control sub-image-input" placeholder="Nhập URL ảnh phụ" />
+                        <button type="button" class="btn btn-danger remove-sub-image">Xóa</button>
+                        <div class="sub-image-preview mt-2"></div>
+                    `;
+            container.appendChild(newInput);
+            const input = newInput.querySelector('.sub-image-input');
+            input.addEventListener('input', function () {
+                const preview = this.parentElement.querySelector('.sub-image-preview');
+                preview.innerHTML = this.value ? `<img src="${this.value}" class="img-thumbnail" style="width: 100px; height: 100px;" />` : '';
+            });
+            newInput.querySelector('.remove-sub-image').addEventListener('click', function () {
+                container.removeChild(newInput);
+            });
+        });
+
+        document.getElementById('mainImageInput').addEventListener('input', function () {
+            const preview = document.getElementById('mainImagePreview');
+            preview.innerHTML = this.value ? `<img src="${this.value}" class="img-thumbnail" style="width: 150px; height: 150px;" />` : '';
+        });
+
+        document.querySelectorAll('.sub-image-input').forEach(input => {
+            input.addEventListener('input', function () {
+                const preview = this.parentElement.querySelector('.sub-image-preview');
+                preview.innerHTML = this.value ? `<img src="${this.value}" class="img-thumbnail" style="width: 100px; height: 100px;" />` : '';
+            });
+        });
+
+        document.querySelectorAll('.remove-sub-image').forEach(button => {
+            button.addEventListener('click', function () {
+                this.parentElement.remove();
+            });
+        });
+    </script>
+}

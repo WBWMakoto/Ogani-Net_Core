@@ -1,0 +1,71 @@
+﻿@page
+@model EnableAuthenticatorModel
+@{
+    ViewData["Title"] = "Cấu hình ứng dụng xác thực";
+    ViewData["ActivePage"] = ManageNavPages.TwoFactorAuthentication;
+}
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4 shadow-lg" style="max-width: 600px; width: 100%; border-radius: 10px;">
+        <h2 class="text-center fw-bold"><i class="fas fa-shield-alt"></i> @ViewData["Title"]</h2>
+
+        <partial name="_StatusMessage" model="Model.StatusMessage" />
+
+        <p class="mt-3">Thực hiện các bước sau để thiết lập ứng dụng xác thực:</p>
+
+        <ol class="list-group list-group-numbered">
+            <li class="list-group-item">
+                <p>
+                    Tải xuống ứng dụng xác thực như Microsoft Authenticator hoặc Google Authenticator:
+                </p>
+                <ul>
+                    <li>
+                        <a href="https://go.microsoft.com/fwlink/?Linkid=825072" target="_blank">Microsoft Authenticator cho Android</a>
+                    </li>
+                    <li>
+                        <a href="https://go.microsoft.com/fwlink/?Linkid=825073" target="_blank">Microsoft Authenticator cho iOS</a>
+                    </li>
+                    <li>
+                        <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en" target="_blank">Google Authenticator cho Android</a>
+                    </li>
+                    <li>
+                        <a href="https://apps.apple.com/us/app/google-authenticator/id388497605" target="_blank">Google Authenticator cho iOS</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="list-group-item">
+                <p>Quét mã QR hoặc nhập khoá sau vào ứng dụng xác thực của bạn:</p>
+                <div class="alert alert-info">
+                    <strong>Khoá xác thực:</strong> <kbd>@Model.SharedKey</kbd>
+                </div>
+                <div class="text-center">
+                    <div id="qrCode"></div>
+                    <div id="qrCodeData" data-url="@Html.Raw(@Model.AuthenticatorUri)"></div>
+                </div>
+            </li>
+
+            <li class="list-group-item">
+                <p>
+                    Sau khi quét mã QR hoặc nhập khoá, ứng dụng xác thực sẽ cung cấp một mã xác minh.
+                    Nhập mã vào ô dưới đây để hoàn tất quá trình cấu hình.
+                </p>
+                <form id="send-code" method="post">
+                    <div class="mb-3">
+                        <label asp-for="Input.Code" class="form-label fw-bold">Mã xác minh</label>
+                        <input asp-for="Input.Code" class="form-control" autocomplete="off" placeholder="Nhập mã 6 số" />
+                        <span asp-validation-for="Input.Code" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-success w-100">
+                        <i class="fas fa-check"></i> Xác nhận
+                    </button>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                </form>
+            </li>
+        </ol>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
