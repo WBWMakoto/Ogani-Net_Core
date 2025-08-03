@@ -1,19 +1,21 @@
 # Visual Studio files
-.vs/
+WebApplication1/.vs/
 v17/
 *.suo
 *.user
 *.sln.docstates
 
 # Build results
-bin/
-obj/
+WebApplication1/bin/
+WebApplication1/obj/
 *.dll
 *.exe
 *.pdb
 *.cache
 *.db
 *.bin
+*.assets.cache
+*.genruntimeconfig.cache
 
 # NuGet Packages
 packages/
@@ -25,5 +27,8 @@ TestResults/
 # macOS system files
 .DS_Store
 
-# Ignore project-specific files (customize as needed)
-
+# Ignore project-specific files (sensitive or temporary)
+# SQLQuery1.sql.bak
+WebApplication1/appsettings.Development.json
+WebApplication1/appsettings.Production.json
+*.jwk
