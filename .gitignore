@@ -29,6 +29,6 @@ TestResults/
 
 # Ignore project-specific files (sensitive or temporary)
 # SQLQuery1.sql.bak
-WebApplication1/appsettings.Development.json
-WebApplication1/appsettings.Production.json
-*.jwk
+# WebApplication1/appsettings.Development.json
+# WebApplication1/appsettings.Production.json
+# *.jwk
