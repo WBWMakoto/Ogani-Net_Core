@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .sidebar {
+            width: 250px;
+            min-height: 100vh;
+            background-color: #343a40;
+            transition: width 0.3s;
+        }
+
+            .sidebar .nav-link {
+                color: #adb5bd;
+            }
+
+                .sidebar .nav-link:hover, .sidebar .nav-link.active {
+                    background-color: #198754;
+                    color: white;
+                }
+
+            .sidebar.collapsed {
+                width: 80px;
+            }
+
+                .sidebar.collapsed .nav-link span {
+                    display: none;
+                }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="sidebar d-flex flex-column p-3">
+            <h4 class="text-center text-white">Quản trị</h4>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Index", "Home", new { area = "Admin" })"><i class="fa fa-home"></i> <span>Trang chủ</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Index", "Categories", new { area = "Admin" })"><i class="fa fa-list"></i> <span>Danh mục</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Index", "Products", new { area = "Admin" })"><i class="fa fa-shopping-bag"></i> <span>Sản phẩm</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Index", "Order", new { area = "Admin" })"><i class="fa fa-shopping-cart"></i> <span>Đơn hàng</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("Index", "Blog", new { area = "Admin" })"><i class="fa fa-blog"></i> <span>Bài viết</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Account/Logout"><i class="fa fa-sign-out"></i> <span>Đăng xuất</span></a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="content">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2>Bảng điều khiển</h2>
+                <button class="btn btn-dark" onclick="toggleSidebar()">
+                    <i class="fa fa-bars"></i>
+                </button>
+            </div>
+            <hr>           
+            @RenderBody()
+        </div>
+        
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('collapsed');
+        }
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

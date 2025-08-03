@@ -1,0 +1,139 @@
+﻿@model IEnumerable<WebApplication1.Models.BlogPost>
+
+@{
+    ViewData["Title"] = "Blog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section set-bg" data-setbg="images/breadcrumb.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="breadcrumb__text">
+                    <h2>Blog</h2>
+                    <div class="breadcrumb__option">
+                        <a href="@Url.Action("Index", "Home")">Trang chủ</a>
+                        <span>Blog</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+<!-- Blog Section Begin -->
+<section class="blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-5">
+                <div class="blog__sidebar">
+                    <div class="blog__sidebar__search">
+                        <form action="#">
+                            <input type="text" placeholder="Tìm kiếm...">
+                            <button type="submit"><span class="icon_search"></span></button>
+                        </form>
+                    </div>
+                    <div class="blog__sidebar__item">
+                        <h4>Danh mục</h4>
+                        <ul>
+                            <li><a href="#">Tất cả</a></li>
+                            <li><a href="#">Làm đẹp (20)</a></li>
+                            <li><a href="#">Ẩm thực (5)</a></li>
+                            <li><a href="#">Phong cách sống (9)</a></li>
+                            <li><a href="#">Du lịch (10)</a></li>
+                        </ul>
+                    </div>
+                    <div class="blog__sidebar__item">
+                        <h4>Tin tức mới</h4>
+                        <div class="blog__sidebar__recent">
+                            @foreach (var recentBlog in await _context.BlogPosts.OrderByDescending(b => b.CreatedDate).Take(3).ToListAsync())
+                            {
+                                <a href="@Url.Action("Details", "Blog", new { id = recentBlog.Id })" class="blog__sidebar__recent__item">
+                                    <div class="blog__sidebar__recent__item__pic">
+                                        <img src="@(string.IsNullOrEmpty(recentBlog.ImageUrl) ? "img/blog/sidebar/sr-1.jpg" : recentBlog.ImageUrl)" alt="@recentBlog.Title">
+                                    </div>
+                                    <div class="blog__sidebar__recent__item__text">
+                                        <h6>@recentBlog.Title</h6>
+                                        <span>@recentBlog.CreatedDate.ToString("MMM dd, yyyy")</span>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                    <div class="blog__sidebar__item">
+                        <h4>Tìm kiếm theo</h4>
+                        <div class="blog__sidebar__item__tags">
+                            <a href="#">Táo</a>
+                            <a href="#">Làm đẹp</a>
+                            <a href="#">Rau củ</a>
+                            <a href="#">Trái cây</a>
+                            <a href="#">Thực phẩm lành mạnh</a>
+                            <a href="#">Phong cách sống</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-7">
+                <div class="row">
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var blogPost in Model)
+                        {
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <div class="blog__item">
+                                    <div class="blog__item__pic">
+                                        <img src="@blogPost.ImageUrl" alt="@blogPost.Title" onerror="this.src='images/blog/blog-1.jpg'" />
+                                    </div>
+                                    <div class="blog__item__text">
+                                        <ul>
+                                            <li><i class="fa fa-calendar-o"></i> @blogPost.CreatedDate.ToString("dd/MM/yyyy")</li>
+                                            <li><i class="fa fa-comment-o"></i> @(blogPost.Comments?.Count ?? 0)</li>
+                                        </ul>
+                                        <h5><a href="@Url.Action("Details", "Blog", new { id = blogPost.Id })">@blogPost.Title</a></h5>
+                                        @*<p>@blogPost.Summary</p>*@
+                                        <a href="@Url.Action("Details", "Blog", new { id = blogPost.Id })" class="blog__btn">ĐỌC THÊM <span class="arrow_right"></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="col-lg-12">
+                            <p>Không có bài viết nào để hiển thị.</p>
+                        </div>
+                    }
+
+                    <!-- Phân trang -->
+                    <div class="col-lg-12">
+                        <div class="product__pagination blog__pagination">
+                            @if (ViewBag.PageNumber > 1)
+                            {
+                                <a href="@Url.Action("Index", new { pageNumber = ViewBag.PageNumber - 1 })"><i class="fa fa-long-arrow-left"></i></a>
+                            }
+
+                            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                            {
+                                if (i == ViewBag.PageNumber)
+                                {
+                                    <a class="active" href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Index", new { pageNumber = i })">@i</a>
+                                }
+                            }
+
+                            @if (ViewBag.PageNumber < ViewBag.TotalPages)
+                            {
+                                <a href="@Url.Action("Index", new { pageNumber = ViewBag.PageNumber + 1 })"><i class="fa fa-long-arrow-right"></i></a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Blog Section End -->

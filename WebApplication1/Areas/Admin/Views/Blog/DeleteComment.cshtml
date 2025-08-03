@@ -1,0 +1,32 @@
+﻿@model WebApplication1.Models.Comment
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card shadow-sm border-0 mt-4">
+    <div class="card-header bg-danger text-white">
+        <h4 class="mb-0">Xóa bình luận</h4>
+    </div>
+    <div class="card-body">
+        <h5 class="text-danger">Bạn có chắc chắn muốn xóa bình luận này?</h5>
+        <dl class="row">
+            <dt class="col-sm-3">Nội dung:</dt>
+            <dd class="col-sm-9">@Model.Content</dd>
+            <dt class="col-sm-3">Người dùng:</dt>
+            <dd class="col-sm-9">@Model.UserId</dd>
+            <dt class="col-sm-3">Ngày tạo:</dt>
+            <dd class="col-sm-9">@Model.CreatedDate.ToString("dd/MM/yyyy HH:mm")</dd>
+        </dl>
+        <form asp-action="DeleteComment" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger btn-lg shadow-sm">
+                <i class="fa fa-trash"></i> Xóa
+            </button>
+            <a asp-action="Details" asp-route-id="@Model.BlogPostId" class="btn btn-secondary btn-lg shadow-sm ms-2">
+                <i class="fa fa-arrow-left"></i> Hủy
+            </a>
+        </form>
+    </div>
+</div>

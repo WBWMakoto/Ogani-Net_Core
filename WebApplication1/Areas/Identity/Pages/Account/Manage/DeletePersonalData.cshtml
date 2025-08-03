@@ -1,0 +1,42 @@
+﻿@page
+@model DeletePersonalDataModel
+@{
+    ViewData["Title"] = "Xóa Dữ Liệu Cá Nhân";
+    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+}
+
+<h4 class="fw-bold text-center text-danger mb-3">⚠️ Xóa Dữ Liệu Cá Nhân</h4>
+
+<div class="alert alert-danger" role="alert">
+    <p class="fw-semibold">
+        <i class="fas fa-exclamation-triangle"></i> <strong>Bạn có chắc chắn muốn xóa tài khoản?</strong>
+    </p>
+    <p>
+        Sau khi xóa, toàn bộ dữ liệu của bạn sẽ bị mất vĩnh viễn và không thể khôi phục lại. Hãy chắc chắn rằng bạn đã sao lưu những thông tin quan trọng trước khi thực hiện hành động này.
+    </p>
+</div>
+
+<div class="container d-flex justify-content-center">
+    <div class="card p-4 shadow-lg" style="max-width: 450px; width: 100%; border-radius: 10px;">
+        <form id="delete-user" method="post" class="form-group">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            @if (Model.RequirePassword)
+            {
+                <div class="mb-3">
+                    <label asp-for="Input.Password" class="form-label fw-semibold">🔑 Nhập mật khẩu</label>
+                    <input asp-for="Input.Password" class="form-control rounded-pill" placeholder="Nhập mật khẩu để xác nhận" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+            }
+
+            <button class="btn btn-danger w-100 rounded-pill" type="submit">
+                🗑 Xóa tài khoản vĩnh viễn
+            </button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

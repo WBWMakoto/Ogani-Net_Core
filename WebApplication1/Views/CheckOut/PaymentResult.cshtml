@@ -1,0 +1,48 @@
+﻿@model WebApplication1.Models.PaymentResultViewModel
+
+@{
+    ViewData["Title"] = "Payment Result";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Payment Result Section Begin -->
+<section class="payment-result spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                @if (Model.Success)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading">Thanh toán thành công!</h4>
+                        <p>@Model.Message</p>
+                        <hr>
+                        <p class="mb-0">Mã đơn hàng của bạn: <strong>@Model.OrderId</strong></p>
+                        <p>Cảm ơn bạn đã mua sắm! Bạn sẽ được chuyển hướng về giỏ hàng trong giây lát...</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-danger" role="alert">
+                        <h4 class="alert-heading">Thanh toán thất bại!</h4>
+                        <p>@Model.Message</p>
+                        <hr>
+                        <p class="mb-0">Vui lòng thử lại hoặc liên hệ hỗ trợ.</p>
+                        <p>Bạn sẽ được chuyển hướng về giỏ hàng trong giây lát...</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Payment Result Section End -->
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Tự động chuyển hướng về giỏ hàng sau 3 giây
+            setTimeout(function () {
+                window.location.href = '@Url.Action("Index", "Cart")';
+            }, 3000);
+        });
+    </script>
+}

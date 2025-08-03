@@ -1,0 +1,456 @@
+﻿@model WebApplication1.Models.HomeViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Hero Section Begin -->
+<section class="hero">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="hero__categories">
+                    <div class="hero__categories__all">
+                        <i class="fa fa-bars"></i>
+                        <span>Danh mục</span>
+                    </div>
+                    <ul>
+                        <li>
+                            <a href="@Url.Action("Index", "Shop", new { page = 1, sort = ViewBag.CurrentSort, minPrice = ViewBag.MinPrice, maxPrice = ViewBag.MaxPrice, categoryId = 0 })"
+                               class="@(ViewBag.CurrentCategoryId == 0 ? "active" : "")">
+                                Tất cả
+                            </a>
+                        </li>
+                        @foreach (var category in Model.Categories)
+                        {
+                            <li>
+                                <a href="@Url.Action("Index", "Shop", new { page = 1, sort = ViewBag.CurrentSort, minPrice = ViewBag.MinPrice, maxPrice = ViewBag.MaxPrice, categoryId = category.Id })"
+                                   class="@(ViewBag.CurrentCategoryId == category.Id ? "active" : "")">
+                                    @category.Name
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="hero__search">
+                    <div class="hero__search__form">
+                        <form id="searchForm" asp-controller="Shop" asp-action="Index" method="get">
+                            <div class="hero__search__categories">
+                                All Categories
+                                <span class="arrow_carrot-down"></span>
+                            </div>
+                            <input type="text" id="searchInput" name="search" placeholder="What do you need?" autocomplete="off">
+                            <button type="submit" class="site-btn">SEARCH</button>
+                        </form>
+                    </div>
+                    <div class="hero__search__phone">
+                        <div class="hero__search__phone__icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <div class="hero__search__phone__text">
+                            <h5>0702775390</h5>
+                            <span>hỗ trợ 24/7</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero__item set-bg" data-setbg="/images/hero/banner.jpg">
+                    <div class="hero__text">
+                        <span>TRÁI CÂY TƯƠI</span>
+                        <h2>Rau quả <br />100% Hữu cơ</h2>
+                        <p>Có dịch vụ nhận và giao hàng miễn phí</p>
+                        <a href="~Home/Shop" class="primary-btn">MUA NGAY</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+<!-- Categories Section Begin -->
+<section class="categories">
+    <div class="container">
+        <div class="row">
+            <div class="categories__slider owl-carousel">
+                <div class="col-lg-3">
+                    <div class="categories__item set-bg" data-setbg="images/categories/cat-1.jpg">
+                        <h5><a href="#">Trái cây tươi</a></h5>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="categories__item set-bg" data-setbg="images/categories/cat-2.jpg">
+                        <h5><a href="#">Trái cây sấy khô</a></h5>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="categories__item set-bg" data-setbg="images/categories/cat-3.jpg">
+                        <h5><a href="#">Rau</a></h5>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="categories__item set-bg" data-setbg="images/categories/cat-4.jpg">
+                        <h5><a href="#">Nước ép trái cây</a></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Categories Section End -->
+<!-- Featured Section Begin -->
+<section class="featured spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h2>Sản phẩm nổi bật</h2>
+                </div>
+                <div class="featured__controls">
+                    <ul>
+                        <li class="active" data-filter="*">Tất cả</li>
+                        @foreach (var category in Model.Categories.Take(12))
+                        {
+                            <li data-filter=".@category.Name.ToLower().Replace(" ", "-")">@category.Name</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row featured__filter">
+            @foreach (var product in Model.Products)
+            {
+                var categoryClass = product.Category != null ? product.Category.Name.ToLower().Replace(" ", "-") : "uncategorized";
+                <div class="col-lg-3 col-md-4 col-sm-6 mix @categoryClass">
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg" data-setbg="@(string.IsNullOrEmpty(product.ImageUrl) ? "/images/product/default.jpg" : product.ImageUrl)">
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li>
+                                    <a href="#" class="share-product"
+                                       data-product-name="@product.Name"
+                                       data-product-url="@Url.Action("Details", "Shop", new { id = product.Id }, protocol: Context.Request.Scheme)"
+                                       data-product-image="@(string.IsNullOrEmpty(product.ImageUrl) ? "/images/product/default.jpg" : product.ImageUrl)">
+                                        <i class="fa fa-retweet"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="add-to-cart" data-product-id="@product.Id">
+                                        <i class="fa fa-shopping-cart"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a asp-controller="Shop" asp-action="Details" asp-route-id="@product.Id">@product.Name</a></h6>
+                            <h5>
+                                @(product.Price % 1 == 0
+                                    ? product.Price.ToString("#,##0")
+                                    : product.Price.ToString("#,##0.##"))
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- Featured Section End -->
+<!-- Banner Begin -->
+<div class="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="banner__pic">
+                    <img src="images/banner/banner-1.jpg" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6">
+                <div class="banner__pic">
+                    <img src="images/banner/banner-2.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Banner End -->
+<!-- Latest Product Section Begin -->
+<section class="latest-product spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>Sản phẩm mới nhất</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        @if (Model.LatestProducts.Any())
+                        {
+                            var latestChunks = Model.LatestProducts
+                            .Select((product, index) => new { Product = product, Index = index })
+                            .GroupBy(x => x.Index / 3);
+                            @foreach (var group in latestChunks)
+                            {
+                                <div class="latest-prdouct__slider__item">
+                                    @foreach (var item in group)
+                                    {
+                                        <div class="latest-product__item">
+                                            <a asp-controller="Shop" asp-action="Details" asp-route-id="@item.Product.Id" class="latest-product__item__link">
+                                                <div class="latest-product__item__pic">
+                                                    <img src="@(string.IsNullOrEmpty(item.Product.ImageUrl) ? "/images/latest-product/default.jpg" : item.Product.ImageUrl)" alt="">
+                                                </div>
+                                                <div class="latest-product__item__text">
+                                                    <h6>@item.Product.Name</h6>
+                                                    <span>
+                                                        @(item.Product.Price % 1 == 0
+                                                            ? item.Product.Price.ToString("#,##0")
+                                                            : item.Product.Price.ToString("#,##0.##"))
+                                                    </span>
+                                                    <small>Rating: @item.Product.Rating.ToString("F1")/5</small>
+                                                </div>
+                                            </a>
+                                            <div class="latest-product__item__actions">
+                                                <a href="#" class="add-to-cart" data-product-id="@item.Product.Id">
+                                                    <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p>Không có sản phẩm mới nhất.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>Được đánh giá hàng đầu</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        @if (Model.TopRatedProducts.Any())
+                        {
+                            var topRatedChunks = Model.TopRatedProducts
+                            .Select((product, index) => new { Product = product, Index = index })
+                            .GroupBy(x => x.Index / 3);
+                            @foreach (var group in topRatedChunks)
+                            {
+                                <div class="latest-prdouct__slider__item">
+                                    @foreach (var item in group)
+                                    {
+                                        <div class="latest-product__item">
+                                            <a asp-controller="Shop" asp-action="Details" asp-route-id="@item.Product.Id" class="latest-product__item__link">
+                                                <div class="latest-product__item__pic">
+                                                    <img src="@(string.IsNullOrEmpty(item.Product.ImageUrl) ? "/images/latest-product/default.jpg" : item.Product.ImageUrl)" alt="">
+                                                </div>
+                                                <div class="latest-product__item__text">
+                                                    <h6>@item.Product.Name</h6>
+                                                    <span>
+                                                        @(item.Product.Price % 1 == 0
+                                                            ? item.Product.Price.ToString("#,##0")
+                                                            : item.Product.Price.ToString("#,##0.##"))
+                                                    </span>
+                                                    <small>Đánh giá: @item.Product.Rating.ToString("F1")/5</small>
+                                                </div>
+                                            </a>
+                                            <div class="latest-product__item__actions">
+                                                <a href="#" class="add-to-cart" data-product-id="@item.Product.Id">
+                                                    <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p>Không có sản phẩm được đánh giá cao nhất.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="latest-product__text">
+                    <h4>Nhiều review nhất</h4>
+                    <div class="latest-product__slider owl-carousel">
+                        @if (Model.ReviewProducts.Any())
+                        {
+                            var reviewChunks = Model.ReviewProducts
+                            .Select((product, index) => new { Product = product, Index = index })
+                            .GroupBy(x => x.Index / 3);
+                            @foreach (var group in reviewChunks)
+                            {
+                                <div class="latest-prdouct__slider__item">
+                                    @foreach (var item in group)
+                                    {
+                                        <div class="latest-product__item">
+                                            <a asp-controller="Shop" asp-action="Details" asp-route-id="@item.Product.Id" class="latest-product__item__link">
+                                                <div class="latest-product__item__pic">
+                                                    <img src="@(string.IsNullOrEmpty(item.Product.ImageUrl) ? "/images/latest-product/default.jpg" : item.Product.ImageUrl)" alt="">
+                                                </div>
+                                                <div class="latest-product__item__text">
+                                                    <h6>@item.Product.Name</h6>
+                                                    <span>
+                                                        @(item.Product.Price % 1 == 0
+                                                            ? item.Product.Price.ToString("#,##0")
+                                                            : item.Product.Price.ToString("#,##0.##"))
+                                                    </span>
+                                                    <small>Rating: @item.Product.Rating.ToString("F1")/5</small>
+                                                </div>
+                                            </a>
+                                            <div class="latest-product__item__actions">
+                                                <a href="#" class="add-to-cart" data-product-id="@item.Product.Id">
+                                                    <i class="fa fa-shopping-cart"></i> Thêm vào giỏ
+                                                </a>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p>Không có sản phẩm nào để đánh giá.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Latest Product Section End -->
+<!-- Blog Section Begin -->
+<section class="from-blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title from-blog__title">
+                    <h2>Từ Blog</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var blog in Model.BlogPosts)
+            {
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="blog__item">
+                        <div class="blog__item__pic">
+                            <img src="@(string.IsNullOrEmpty(blog.ImageUrl) ? "~/images/blog/default.jpg" : blog.ImageUrl)" alt="@blog.Title">
+                        </div>
+                        <div class="blog__item__text">
+                            <ul>
+                                <li><i class="fa fa-calendar-o"></i> @blog.CreatedDate.ToString("MMM d, yyyy")</li>
+                                <li><i class="fa fa-comment-o"></i> @(blog.Comments?.Count ?? 0)</li>
+                            </ul>
+                            <h5><a href="@Url.Action("Details", "Blog", new { id = blog.Id })">@blog.Title</a></h5>
+                            <p>@(blog.Content.Length > 100 ? blog.Content.Substring(0, 100) + "..." : blog.Content)</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<!-- Blog Section End -->
+@section Scripts {
+    <!-- Thêm jQuery và jQuery UI -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script>
+        $(document).ready(function () {
+            // Tích hợp jQuery UI Autocomplete
+            $("#searchInput").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("SearchSuggestions", "Home")',
+                        dataType: "json",
+                        data: {
+                            term: request.term
+                        },
+                        success: function (data) {
+                            response(data);
+                        },
+                        error: function () {
+                            response([]);
+                        }
+                    });
+                },
+                minLength: 2, // Yêu cầu ít nhất 2 ký tự để bắt đầu tìm kiếm
+                select: function (event, ui) {
+                    // Khi người dùng chọn một gợi ý, chuyển hướng đến trang chi tiết sản phẩm
+                    window.location.href = '@Url.Action("Details", "Shop")/' + ui.item.value;
+                    return false;
+                }
+            });
+
+            // Xử lý thêm vào giỏ hàng bằng AJAX
+            $('.add-to-cart').click(function (e) {
+                e.preventDefault();
+                var productId = $(this).data('product-id');
+
+                $.ajax({
+                    url: '@Url.Action("AddToCart", "Cart")',
+                    type: 'POST',
+                    data: { productId: productId, quantity: 1 },
+                    success: function (response) {
+                        if (response.success) {
+                            $("#cart-count").text(response.cartCount);
+                            $("#cart-count-mobile").text(response.cartCount);
+                            $(".header__cart__price span").text(response.cartTotal + "đ");
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success',
+                                text: response.message,
+                                timer: 1500
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: response.message
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'An error occurred while adding to cart.'
+                        });
+                    }
+                });
+            });
+
+            // Xử lý chia sẻ sản phẩm
+            $('.share-product').click(function (e) {
+                e.preventDefault();
+                var productName = $(this).data('product-name');
+                var productUrl = $(this).data('product-url');
+                var productImage = $(this).data('product-image');
+
+                var shareText = `Check out this product: ${productName} - ${productUrl}`;
+
+                Swal.fire({
+                    title: 'Share this product',
+                    html: `
+                                <div>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(productUrl)}" target="_blank" class="btn btn-primary" style="margin: 5px;">
+                                        <i class="fa fa-facebook"></i> Share on Facebook
+                                    </a>
+                                    <a href="https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}" target="_blank" class="btn btn-info" style="margin: 5px;">
+                                        <i class="fa fa-twitter"></i> Share on Twitter
+                                    </a>
+                                </div>
+                            `,
+                    showConfirmButton: false,
+                    showCancelButton: true,
+                    cancelButtonText: 'Close'
+                });
+            });
+        });
+    </script>
+}

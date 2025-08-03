@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using WebApplication1.Data.Entities
+
+@inject SignInManager<ManageUser> SignInManager
+@inject UserManager<ManageUser> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item d-flex align-items-center">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                Chào @User.Identity.Name!
+            </a>
+            <span class="border-start mx-2" style="height: 20px;"></span>
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
+                  asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                <button type="submit" class="nav-link btn btn-link text-dark">
+                    <i class="fa fa-arrow-right-from-bracket"></i> Đăng xuất
+                </button>
+            </form>
+        </li>
+
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login"><i class="fa fa-arrow-right-to-bracket"></i> Đăng nhập</a>
+        </li>
+    }
+</ul>

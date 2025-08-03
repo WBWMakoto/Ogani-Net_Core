@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Lỗi";
+}
+
+<div class="container text-center mt-5">
+    <h1 class="text-danger"><i class="fas fa-exclamation-circle"></i> Lỗi</h1>
+    <h2 class="text-danger">Đã xảy ra lỗi trong quá trình xử lý yêu cầu.</h2>
+
+    <h3 class="mt-4">Chế độ phát triển</h3>
+    <p>
+        Chuyển sang môi trường <strong>Phát triển</strong> sẽ hiển thị thông tin chi tiết hơn về lỗi đã xảy ra.
+    </p>
+    <p>
+        <strong>Không nên bật chế độ phát triển trong môi trường triển khai thực tế</strong>
+        vì có thể làm lộ thông tin nhạy cảm.
+        Để bật chế độ phát triển khi chạy cục bộ, hãy đặt biến môi trường
+        <strong>ASPNETCORE_ENVIRONMENT</strong> thành <strong>Development</strong> và khởi động lại ứng dụng.
+    </p>
+</div>

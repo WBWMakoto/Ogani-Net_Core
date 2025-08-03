@@ -1,0 +1,72 @@
+﻿@model WebApplication1.Models.BlogPost
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="card shadow-sm border-0 mt-4">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">Chi tiết bài viết</h4>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Tiêu đề:</dt>
+            <dd class="col-sm-9">@Model.Title</dd>
+            <dt class="col-sm-3">Tác giả:</dt>
+            <dd class="col-sm-9">@Model.Author</dd>
+            <dt class="col-sm-3">Ngày tạo:</dt>
+            <dd class="col-sm-9">@Model.CreatedDate.ToString("dd/MM/yyyy HH:mm")</dd>
+            <dt class="col-sm-3">Hình ảnh:</dt>
+            <dd class="col-sm-9">
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <img src="@Model.ImageUrl" alt="@Model.ImageUrl" class="img-thumbnail" style="width: 150px; height: 150px;" />
+                }
+            </dd>
+            <dt class="col-sm-3">Nội dung:</dt>
+            <dd class="col-sm-9">@Model.Content</dd>
+        </dl>
+
+        <div class="mt-4">
+            <h5>Bình luận</h5>
+            <a href="@Url.Action("CreateComment", "Blog", new { area = "Admin", blogPostId = Model.Id })" class="btn btn-success btn-sm mb-3">
+                <i class="fa fa-plus"></i> Thêm bình luận
+            </a>
+            @if (Model.Comments != null && Model.Comments.Any())
+            {
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Nội dung</th>
+                            <th>Người dùng</th>
+                            <th>Ngày tạo</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var comment in Model.Comments)
+                        {
+                            <tr>
+                                <td>@comment.Content</td>
+                                <td>@comment.UserId</td>
+                                <td>@comment.CreatedDate.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>
+                                    <a href="@Url.Action("EditComment", "Blog", new { area = "Admin", id = comment.Id })" class="btn btn-warning btn-sm">Sửa</a>
+                                    <a href="@Url.Action("DeleteComment", "Blog", new { area = "Admin", id = comment.Id })" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa bình luận này?');">Xóa</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>Chưa có bình luận nào.</p>
+            }
+        </div>
+
+        <div class="text-end mt-3">
+            <a href="@Url.Action("Index", "Blog", new { area = "Admin" })" class="btn btn-secondary">Quay lại</a>
+        </div>
+    </div>
+</div>
